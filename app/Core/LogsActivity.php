@@ -55,7 +55,9 @@ trait LogsActivity
                     }
                     $changesDescription .= "{$key}: '{$originalValue}' => '{$value}' ";
                 }
-
+                if($eventName == "created"){
+                    $changesDescription = ""  ;   
+                }
                 // Generate the description
                 return new HtmlString(
                 '<div class="flex flex-col gap-1">'
