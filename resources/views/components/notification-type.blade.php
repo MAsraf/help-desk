@@ -1,30 +1,6 @@
 @switch($notification->type)
-    @case(\App\Notifications\CommentCreateNotification::class)
-        <div class="flex flex-col justify-start items-start gap-2">
-            <?php
-            $comment = App\Models\Comment::find($notification->data['comment']['id']);
-            ?>
-            <span class="text-sm text-gray-700 font-medium">@lang(':user commented the ticket: :ticket',  [
-                
-                
-                'user' => $comment->owner->where('id',$notification->data['comment']['owner_id'])->pluck('name')->first(),
-                'ticket' => $notification->data['ticket']['title']
-            ])</span>
-            <a href="{{ route(
-                    'tickets.details',
-                    [
-                        'ticket' => $notification->data['ticket']['id'],
-                        'slug' => Str::slug($notification->data['ticket']['title'])
-                    ]
-                ) }}"
-               class="text-gray-500 hover:text-primary-500 text-xs flex flex-row justify-start items-center gap-2"
-            >
-                @lang('View ticket details') <em class="fa fa-long-arrow-right"></em>
-            </a>
-        </div>
-        @break
- 
-    @case(\App\Notifications\SummaryNotification::class)
+    
+    @case(\App\Notifications\SummaryNotification::class) <!-- Digested Notifications  --->
         <div class="flex flex-col justify-start items-start gap-2">
             <?php
             $messages = $notification->data['summary']['messages'];
@@ -128,29 +104,32 @@
         </div>
         @break
 
-    @case(\App\Notifications\TicketCreatedNotification::class)
+    @case(\App\Notifications\CommentCreateNotification::class) <!-- Comment Create Notifications  --->
         <div class="flex flex-col justify-start items-start gap-2">
             <?php
-            $ticket = App\Models\Ticket::find($notification->data['ticket']['id']);
+            $comment = App\Models\Comment::find($notification->data['comment']['id']);
             ?>
-            <span class="text-sm text-gray-700 font-medium">@lang(':user created the ticket: :ticket',  [
-                    'user' => $ticket->owner->where('id',$notification->data['ticket']['owner_id'])->pluck('name')->first(),
-                    'ticket' => $notification->data['ticket']['title']
-                ])</span>
+            <span class="text-sm text-gray-700 font-medium">@lang(':user commented the ticket: :ticket',  [
+                
+                
+                'user' => $comment->owner->where('id',$notification->data['comment']['owner_id'])->pluck('name')->first(),
+                'ticket' => $notification->data['ticket']['title']
+            ])</span>
             <a href="{{ route(
-                            'tickets.details',
-                            [
-                                'ticket' => $notification->data['ticket']['id'],
-                                'slug' => Str::slug($notification->data['ticket']['title'])
-                            ]
-                        ) }}"
-               class="text-gray-500 hover:text-primary-500 text-xs flex flex-row justify-start items-center gap-2">
+                    'tickets.details',
+                    [
+                        'ticket' => $notification->data['ticket']['id'],
+                        'slug' => Str::slug($notification->data['ticket']['title'])
+                    ]
+                ) }}"
+               class="text-gray-500 hover:text-primary-500 text-xs flex flex-row justify-start items-center gap-2"
+            >
                 @lang('View ticket details') <em class="fa fa-long-arrow-right"></em>
             </a>
         </div>
         @break
-
-    @case(\App\Notifications\TicketUpdatedNotification::class)
+ 
+    @case(\App\Notifications\TicketUpdatedNotification::class) <!-- Ticket Updated Notifications  --->
         <div class="flex flex-col justify-start items-start gap-2">
             <?php
             $ticket = App\Models\Ticket::find($notification->data['ticket']['id']);
@@ -199,5 +178,29 @@
             </a>
         </div>
         @break
+
+    @case(\App\Notifications\TicketCreatedNotification::class) <!-- Ticket Created Notifications  --->
+        <div class="flex flex-col justify-start items-start gap-2">
+            <?php
+            $ticket = App\Models\Ticket::find($notification->data['ticket']['id']);
+            ?>
+            <span class="text-sm text-gray-700 font-medium">@lang(':user created the ticket: :ticket',  [
+                    'user' => $ticket->owner->where('id',$notification->data['ticket']['owner_id'])->pluck('name')->first(),
+                    'ticket' => $notification->data['ticket']['title']
+                ])</span>
+            <a href="{{ route(
+                            'tickets.details',
+                            [
+                                'ticket' => $notification->data['ticket']['id'],
+                                'slug' => Str::slug($notification->data['ticket']['title'])
+                            ]
+                        ) }}"
+               class="text-gray-500 hover:text-primary-500 text-xs flex flex-row justify-start items-center gap-2">
+                @lang('View ticket details') <em class="fa fa-long-arrow-right"></em>
+            </a>
+        </div>
+        @break
+
+    
 
 @endswitch
