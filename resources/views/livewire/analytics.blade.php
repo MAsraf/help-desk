@@ -1,23 +1,4 @@
-<div class="relative h-320 w-320">
-<div class="w-full absolute inset-0 -top-12 flex flex-col justify-start items-start gap-5" style="margin-left: 100px;padding: 20px;">
-    <div class="w-full flex md:flex-row flex-col justify-between items-start gap-2">
-        <div class="flex flex-col justify-center items-start gap-1">
-            <span class="lg:text-4xl md:text-2xl text-xl font-medium text-gray-700">
-                @lang('Analytics')
-            </span>
-            <span class="lg:text-lg md:text-sm text-xs font-light text-gray-500">
-                @lang('Below is the dashboard containing all analytics related to tickets configured in :app', [
-                    'app' => config('app.name')
-                ])
-            </span>
-        </div>
-    </div>
-
-
-
-
-    <div class="w-full flex flex-row flex-wrap">
-        <div class="lg:w-1/1 w-full flex flex-col">
+<div>          
             <!-- Content sections -->
             <!-- Not Assigned Tickets -->
             <div id="content1" style="display: none;">
@@ -159,7 +140,7 @@
                         </span>
                         {{-- Chart --}}
                         <div class="overflow-x-auto relative sm:rounded-lg w-full">
-                            <canvas id="ticketsByStatuses" style="height: 200px;"></canvas>
+                            <canvas id="ticketsByStatuses" style="height: 97px;"></canvas>
                         </div>
                         {{-- Table for chart --}}
                         <div class="w-full overflow-x-auto relative sm:rounded-lg">
@@ -255,8 +236,6 @@
                 </div>
             </div>
             
-        </div>
-    </div>
 </div>
 
 
@@ -369,6 +348,7 @@
         document.getElementById('content2').style.display = 'none';
         document.getElementById('content3').style.display = 'none';
         document.getElementById('content4').style.display = 'none';
+        document.getElementById('content5').style.display = 'none';
         // Add more lines for other content sections if needed
         }
 
