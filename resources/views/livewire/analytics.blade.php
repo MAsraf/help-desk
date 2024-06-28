@@ -348,7 +348,7 @@
         document.getElementById('content2').style.display = 'none';
         document.getElementById('content3').style.display = 'none';
         document.getElementById('content4').style.display = 'none';
-        document.getElementById('content5').style.display = 'none';
+        // document.getElementById('content5').style.display = 'none';
         // Add more lines for other content sections if needed
         }
 

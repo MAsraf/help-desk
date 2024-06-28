@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('priority');
             $table->foreignId('owner_id')->constrained('users');
             $table->foreignId('responsible_id')->nullable()->constrained('users');
+            $table->date('inprogress_at')->nullable();
+            $table->date('closed_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -20,11 +20,10 @@
             <div class="w-full flex flex-row flex-wrap">
             <div class="lg:w-3/4 h-2/4 flex flex-col">
                 @livewire('analytics')
+                <!-- @livewire('analytics.date-picker') -->
+                @livewire('analytics.ticket-trend')
             </div>
             </div>
-    <div>
-        @livewire('analytics.date-picker')
-    </div>
         </div>
     </div>
 </x-layout>
