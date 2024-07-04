@@ -10,14 +10,18 @@ class Analytics extends Component
 {
     public $assignedTickets;
     public $notAssignedTickets;
-    public $ticketsAssignments;
     public $ticketsByStatuses;
+
+    public $startDate;
+    public $endDate;
 
     public function mount(): void
     {
+        $this->startDate = now()->startOfMonth()->toDateString();
+        $this->endDate = now()->endOfMonth()->toDateString();
+
         $this->loadAssignedTickets();
         $this->loadNotAssignedTickets();
-        $this->loadTicketsAssignments();
         $this->loadTicketsByStatuses();
     }
 
@@ -44,29 +48,6 @@ class Analytics extends Component
     private function loadNotAssignedTickets(): void
     {
         $this->notAssignedTickets = Ticket::whereNull('responsible_id')->get();
-    }
-
-    /**
-     * Load tickets assignements
-     *
-     * @return void
-     */
-    private function loadTicketsAssignments(): void
-    {
-        $query = Ticket::query();
-        if (auth()->user()->can('View own tickets') && !auth()->user()->can('View all tickets')) {
-            $query->where(function ($query) {
-                $query->where('owner_id', auth()->user()->id)
-                    ->orWhere('responsible_id', auth()->user()->id);
-            });
-        }
-        $tickets = $query->get()->groupBy('responsible_id')->sort(function ($a, $b) {
-            return ($a->first()->responsible_id ?? 0) > ($b->first()->responsibe_id ?? 0);
-        });
-        $this->ticketsAssignments = [];
-        foreach ($tickets as $ticket) {
-            $this->ticketsAssignments[$ticket->first()->responsible?->name ?? __('Unassigned')] = $ticket->count();
-        }
     }
 
     /**

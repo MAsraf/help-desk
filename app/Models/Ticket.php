@@ -29,6 +29,8 @@ class Ticket extends Model implements HasLogsActivity
         'owner_id',
         'responsible_id',
         'number',
+        'inprogress_at', 
+        'closed_at',
     ];
 
     protected $appends = [

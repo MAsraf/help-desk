@@ -38,8 +38,58 @@ class UserSeeder extends Seeder
 
         DB::table('users')->insert(
             array(
-                'name' => 'asraf',
+                'name' => 'technician 2',
+                'email' => 'tech2@gmail.com',
+                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+                'created_at' => new \DateTime,
+                'updated_at' => new \DateTime,
+            )
+        );
+
+        DB::table('users')->insert(
+            array(
+                'name' => 'Asraf',
                 'email' => 'asraf.educ.it@gmail.com',
+                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+                'created_at' => new \DateTime,
+                'updated_at' => new \DateTime,
+            )
+        );
+
+        DB::table('users')->insert(
+            array(
+                'name' => 'Syariff Ghani',
+                'email' => 'syariffghani@gmail.com',
+                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+                'created_at' => new \DateTime,
+                'updated_at' => new \DateTime,
+            )
+        );
+
+        DB::table('users')->insert(
+            array(
+                'name' => 'Nurul Khaliesah',
+                'email' => 'khaliesah@gmail.com',
+                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+                'created_at' => new \DateTime,
+                'updated_at' => new \DateTime,
+            )
+        );
+
+        DB::table('users')->insert(
+            array(
+                'name' => 'Haikal Handali',
+                'email' => 'haikal@gmail.com',
+                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+                'created_at' => new \DateTime,
+                'updated_at' => new \DateTime,
+            )
+        );
+
+        DB::table('users')->insert(
+            array(
+                'name' => 'Hazmie Khalid',
+                'email' => 'hazmie@gmail.com',
                 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
