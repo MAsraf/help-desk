@@ -158,6 +158,7 @@ class TicketDetailsSeeder extends Seeder
                 'text_color' => '#ffffff',
                 'bg_color' => '#28a745',
                 'slug' => 'hardware',
+                'type' => 'category',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -170,6 +171,7 @@ class TicketDetailsSeeder extends Seeder
                 'bg_color' => '#28a745',
                 'parent_id' => 1,
                 'slug' => 'pc',
+                'type' => 'subcategory',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -177,11 +179,12 @@ class TicketDetailsSeeder extends Seeder
 
         DB::table('ticket_categories')->insert(// 3
             array(
-                'title' => 'Printers and Scanners',
+                'title' => 'PC Repair or Replacement',
                 'text_color' => '#ffffff',
                 'bg_color' => '#28a745',
-                'parent_id' => 1,
-                'slug' => 'printer',
+                'parent_id' => 2,
+                'slug' => 'repairpc',
+                'type' => 'issue',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -189,11 +192,12 @@ class TicketDetailsSeeder extends Seeder
 
         DB::table('ticket_categories')->insert(// 4
             array(
-                'title' => 'Software',
-                'parent_id' => null,
+                'title' => 'Peripheral Issues (Keyboard, Mouse, Monitor)',
                 'text_color' => '#ffffff',
-                'bg_color' => '#aaa233',
-                'slug' => 'software',
+                'bg_color' => '#28a745',
+                'parent_id' => 2,
+                'slug' => 'peripheral',
+                'type' => 'issue',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -201,11 +205,12 @@ class TicketDetailsSeeder extends Seeder
 
         DB::table('ticket_categories')->insert(// 5
             array(
-                'title' => 'Operating Systems',
+                'title' => 'Printers and Scanners',
                 'text_color' => '#ffffff',
-                'bg_color' => '#aaa233',
-                'parent_id' => 4,
-                'slug' => 'os',
+                'bg_color' => '#28a745',
+                'parent_id' => 1,
+                'slug' => 'printer',
+                'type' => 'subcategory',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -213,11 +218,12 @@ class TicketDetailsSeeder extends Seeder
 
         DB::table('ticket_categories')->insert(// 6
             array(
-                'title' => 'Applications',
+                'title' => 'Setup or Configuration',
                 'text_color' => '#ffffff',
-                'bg_color' => '#aaa233',
-                'parent_id' => 4,
-                'slug' => 'apps',
+                'bg_color' => '#28a745',
+                'parent_id' => 5,
+                'slug' => 'setupprinter',
+                'type' => 'issue',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -225,11 +231,12 @@ class TicketDetailsSeeder extends Seeder
 
         DB::table('ticket_categories')->insert(// 7
             array(
-                'title' => 'Email',
+                'title' => 'Printer/Scanner Repair or Replacement',
                 'text_color' => '#ffffff',
-                'bg_color' => '#aaa233',
-                'parent_id' => 4,
-                'slug' => 'email',
+                'bg_color' => '#28a745',
+                'parent_id' => 5,
+                'slug' => 'repairprinter',
+                'type' => 'issue',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -237,11 +244,12 @@ class TicketDetailsSeeder extends Seeder
 
         DB::table('ticket_categories')->insert(// 8
             array(
-                'title' => 'Network',
+                'title' => 'Connectivity Issues',
                 'text_color' => '#ffffff',
-                'bg_color' => '#ccc233',
-                'parent_id' => null,
-                'slug' => 'network',
+                'bg_color' => '#28a745',
+                'parent_id' => 5,
+                'slug' => 'printerconnectivity',
+                'type' => 'issue',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -249,11 +257,12 @@ class TicketDetailsSeeder extends Seeder
 
         DB::table('ticket_categories')->insert(// 9
             array(
-                'title' => 'Connectivity',
+                'title' => 'Printing Quality Problems',
                 'text_color' => '#ffffff',
-                'bg_color' => '#ccc233',
-                'parent_id' => 8,
-                'slug' => 'connectivity',
+                'bg_color' => '#28a745',
+                'parent_id' => 5,
+                'slug' => 'printerquality',
+                'type' => 'issue',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -261,11 +270,12 @@ class TicketDetailsSeeder extends Seeder
 
         DB::table('ticket_categories')->insert(// 10
             array(
-                'title' => 'Security',
+                'title' => 'Software',
+                'parent_id' => null,
                 'text_color' => '#ffffff',
-                'bg_color' => '#ccc233',
-                'parent_id' => 8,
-                'slug' => 'security',
+                'bg_color' => '#aaa233',
+                'slug' => 'software',
+                'type' => 'category',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -273,11 +283,12 @@ class TicketDetailsSeeder extends Seeder
 
         DB::table('ticket_categories')->insert(// 11
             array(
-                'title' => 'Accounts and Access',
+                'title' => 'Operating Systems',
                 'text_color' => '#ffffff',
-                'bg_color' => '#bbb444',
-                'parent_id' => null,
-                'slug' => 'accountaccess',
+                'bg_color' => '#aaa233',
+                'parent_id' => 10,
+                'slug' => 'os',
+                'type' => 'subcategory',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -285,11 +296,12 @@ class TicketDetailsSeeder extends Seeder
 
         DB::table('ticket_categories')->insert(// 12
             array(
-                'title' => 'User Accounts',
+                'title' => 'OS Installation or Upgrade',
                 'text_color' => '#ffffff',
-                'bg_color' => '#bbb444',
+                'bg_color' => '#aaa233',
                 'parent_id' => 11,
-                'slug' => 'useraccount',
+                'slug' => 'installos',
+                'type' => 'issue',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -297,23 +309,26 @@ class TicketDetailsSeeder extends Seeder
 
         DB::table('ticket_categories')->insert(// 13
             array(
-                'title' => 'e-Cloud MyIPO',
+                'title' => 'OS Performance Issues',
                 'text_color' => '#ffffff',
-                'bg_color' => '#bbb444',
+                'bg_color' => '#aaa233',
                 'parent_id' => 11,
-                'slug' => 'ecloud',
+                'slug' => 'osperformance',
+                'type' => 'issue',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
         );
 
+
         DB::table('ticket_categories')->insert(// 14
             array(
-                'title' => 'Network Access Right',
+                'title' => 'Applications',
                 'text_color' => '#ffffff',
-                'bg_color' => '#bbb444',
-                'parent_id' => 11,
-                'slug' => 'networkaccessright',
+                'bg_color' => '#aaa233',
+                'parent_id' => 10,
+                'slug' => 'apps',
+                'type' => 'subcategory',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -321,11 +336,12 @@ class TicketDetailsSeeder extends Seeder
 
         DB::table('ticket_categories')->insert(// 15
             array(
-                'title' => 'New User Account & Computer Installation',
+                'title' => 'Application Installation or Upgrade',
                 'text_color' => '#ffffff',
-                'bg_color' => '#abc123',
-                'parent_id' => null,
-                'slug' => 'newuser',
+                'bg_color' => '#aaa233',
+                'parent_id' => 14,
+                'slug' => 'appinstall',
+                'type' => 'issue',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -333,11 +349,12 @@ class TicketDetailsSeeder extends Seeder
 
         DB::table('ticket_categories')->insert(// 16
             array(
-                'title' => 'Create New Account & Computer Installation',
+                'title' => 'Licensing Issues',
                 'text_color' => '#ffffff',
-                'bg_color' => '#abc123',
-                'parent_id' => 15,
-                'slug' => 'createaccount',
+                'bg_color' => '#aaa233',
+                'parent_id' => 14,
+                'slug' => 'applicense',
+                'type' => 'issue',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -345,11 +362,12 @@ class TicketDetailsSeeder extends Seeder
 
         DB::table('ticket_categories')->insert(// 17
             array(
-                'title' => 'User Re-Placement',
+                'title' => 'Functionality Problems',
                 'text_color' => '#ffffff',
-                'bg_color' => '#cba321',
-                'parent_id' => null,
-                'slug' => 'userreplacement',
+                'bg_color' => '#aaa233',
+                'parent_id' => 14,
+                'slug' => 'appfunction',
+                'type' => 'issue',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -357,11 +375,312 @@ class TicketDetailsSeeder extends Seeder
 
         DB::table('ticket_categories')->insert(// 18
             array(
+                'title' => 'Email',
+                'text_color' => '#ffffff',
+                'bg_color' => '#aaa233',
+                'parent_id' => 10,
+                'slug' => 'email',
+                'type' => 'subcategory',
+                'created_at' => new \DateTime,
+                'updated_at' => new \DateTime,
+            )
+        );
+
+        DB::table('ticket_categories')->insert(// 19
+            array(
+                'title' => 'Mailbox Quotas',
+                'text_color' => '#ffffff',
+                'bg_color' => '#aaa233',
+                'parent_id' => 18,
+                'slug' => 'emailquota',
+                'type' => 'issue',
+                'created_at' => new \DateTime,
+                'updated_at' => new \DateTime,
+            )
+        );
+
+        DB::table('ticket_categories')->insert(// 20
+            array(
+                'title' => 'Email Performance Issues',
+                'text_color' => '#ffffff',
+                'bg_color' => '#aaa233',
+                'parent_id' => 18,
+                'slug' => 'emailperformance',
+                'type' => 'issue',
+                'created_at' => new \DateTime,
+                'updated_at' => new \DateTime,
+            )
+        );
+
+        DB::table('ticket_categories')->insert(// 21
+            array(
+                'title' => 'Connectivity Problems',
+                'text_color' => '#ffffff',
+                'bg_color' => '#aaa233',
+                'parent_id' => 18,
+                'slug' => 'emailconnectivity',
+                'type' => 'issue',
+                'created_at' => new \DateTime,
+                'updated_at' => new \DateTime,
+            )
+        );
+
+        DB::table('ticket_categories')->insert(// 22
+            array(
+                'title' => 'Setup Account Mobile',
+                'text_color' => '#ffffff',
+                'bg_color' => '#aaa233',
+                'parent_id' => 18,
+                'slug' => 'emailsetup',
+                'type' => 'issue',
+                'created_at' => new \DateTime,
+                'updated_at' => new \DateTime,
+            )
+        );
+
+        DB::table('ticket_categories')->insert(// 23
+            array(
+                'title' => 'Network',
+                'text_color' => '#ffffff',
+                'bg_color' => '#ccc233',
+                'parent_id' => null,
+                'slug' => 'network',
+                'type' => 'category',
+                'created_at' => new \DateTime,
+                'updated_at' => new \DateTime,
+            )
+        );
+
+        DB::table('ticket_categories')->insert(// 24
+            array(
+                'title' => 'Connectivity',
+                'text_color' => '#ffffff',
+                'bg_color' => '#ccc233',
+                'parent_id' => 23,
+                'slug' => 'connectivity',
+                'type' => 'subcategory',
+                'created_at' => new \DateTime,
+                'updated_at' => new \DateTime,
+            )
+        );
+
+        DB::table('ticket_categories')->insert(// 25
+            array(
+                'title' => 'Wired/Wireless Access Issues',
+                'text_color' => '#ffffff',
+                'bg_color' => '#ccc233',
+                'parent_id' => 24,
+                'slug' => 'networkaccess',
+                'type' => 'issue',
+                'created_at' => new \DateTime,
+                'updated_at' => new \DateTime,
+            )
+        );
+
+        DB::table('ticket_categories')->insert(// 26
+            array(
+                'title' => 'VPN Connectivity Problems',
+                'text_color' => '#ffffff',
+                'bg_color' => '#ccc233',
+                'parent_id' => 24,
+                'slug' => 'vpnconnectivity',
+                'type' => 'issue',
+                'created_at' => new \DateTime,
+                'updated_at' => new \DateTime,
+            )
+        );
+
+        DB::table('ticket_categories')->insert(// 27
+            array(
+                'title' => 'VPN - Request Configuration',
+                'text_color' => '#ffffff',
+                'bg_color' => '#ccc233',
+                'parent_id' => 24,
+                'slug' => 'vpnconfigure',
+                'type' => 'issue',
+                'created_at' => new \DateTime,
+                'updated_at' => new \DateTime,
+            )
+        );
+
+        DB::table('ticket_categories')->insert(// 28
+            array(
+                'title' => 'Network Performance',
+                'text_color' => '#ffffff',
+                'bg_color' => '#ccc233',
+                'parent_id' => 24,
+                'slug' => 'networkperformance',
+                'type' => 'issue',
+                'created_at' => new \DateTime,
+                'updated_at' => new \DateTime,
+            )
+        );
+
+
+        DB::table('ticket_categories')->insert(// 29
+            array(
+                'title' => 'Security',
+                'text_color' => '#ffffff',
+                'bg_color' => '#ccc233',
+                'parent_id' => 23,
+                'slug' => 'security',
+                'type' => 'subcategory',
+                'created_at' => new \DateTime,
+                'updated_at' => new \DateTime,
+            )
+        );
+
+        DB::table('ticket_categories')->insert(// 30
+            array(
+                'title' => 'Firewall Issues',
+                'text_color' => '#ffffff',
+                'bg_color' => '#ccc233',
+                'parent_id' => 29,
+                'slug' => 'firewall',
+                'type' => 'issue',
+                'created_at' => new \DateTime,
+                'updated_at' => new \DateTime,
+            )
+        );
+
+        DB::table('ticket_categories')->insert(// 31
+            array(
+                'title' => 'Virus Attack',
+                'text_color' => '#ffffff',
+                'bg_color' => '#ccc233',
+                'parent_id' => 29,
+                'slug' => 'virus',
+                'type' => 'issue',
+                'created_at' => new \DateTime,
+                'updated_at' => new \DateTime,
+            )
+        );
+
+        DB::table('ticket_categories')->insert(// 32
+            array(
+                'title' => 'Accounts and Access',
+                'text_color' => '#ffffff',
+                'bg_color' => '#bbb444',
+                'parent_id' => null,
+                'slug' => 'accountaccess',
+                'type' => 'category',
+                'created_at' => new \DateTime,
+                'updated_at' => new \DateTime,
+            )
+        );
+
+        DB::table('ticket_categories')->insert(// 33
+            array(
+                'title' => 'User Accounts',
+                'text_color' => '#ffffff',
+                'bg_color' => '#bbb444',
+                'parent_id' => 32,
+                'slug' => 'useraccount',
+                'type' => 'subcategory',
+                'created_at' => new \DateTime,
+                'updated_at' => new \DateTime,
+            )
+        );
+
+        DB::table('ticket_categories')->insert(// 34
+            array(
+                'title' => 'Password Resets',
+                'text_color' => '#ffffff',
+                'bg_color' => '#bbb444',
+                'parent_id' => 33,
+                'slug' => 'passwordreset',
+                'type' => 'issue',
+                'created_at' => new \DateTime,
+                'updated_at' => new \DateTime,
+            )
+        );
+
+        DB::table('ticket_categories')->insert(// 35
+            array(
+                'title' => 'e-Cloud MyIPO',
+                'text_color' => '#ffffff',
+                'bg_color' => '#bbb444',
+                'parent_id' => 32,
+                'slug' => 'ecloud',
+                'type' => 'subcategory',
+                'created_at' => new \DateTime,
+                'updated_at' => new \DateTime,
+            )
+        );
+
+        DB::table('ticket_categories')->insert(// 36
+            array(
+                'title' => 'Unblock Account',
+                'text_color' => '#ffffff',
+                'bg_color' => '#bbb444',
+                'parent_id' => 35,
+                'slug' => 'unblockaccount',
+                'type' => 'issue',
+                'created_at' => new \DateTime,
+                'updated_at' => new \DateTime,
+            )
+        );
+
+        DB::table('ticket_categories')->insert(// 37
+            array(
+                'title' => 'Network Access Right',
+                'text_color' => '#ffffff',
+                'bg_color' => '#bbb444',
+                'parent_id' => 32,
+                'slug' => 'networkaccessright',
+                'type' => 'subcategory',
+                'created_at' => new \DateTime,
+                'updated_at' => new \DateTime,
+            )
+        );
+
+        DB::table('ticket_categories')->insert(// 38
+            array(
+                'title' => 'New User Account & Computer Installation',
+                'text_color' => '#ffffff',
+                'bg_color' => '#abc123',
+                'parent_id' => null,
+                'slug' => 'newuser',
+                'type' => 'category',
+                'created_at' => new \DateTime,
+                'updated_at' => new \DateTime,
+            )
+        );
+
+        DB::table('ticket_categories')->insert(// 39
+            array(
+                'title' => 'Create New Account & Computer Installation',
+                'text_color' => '#ffffff',
+                'bg_color' => '#abc123',
+                'parent_id' => 38,
+                'slug' => 'createaccount',
+                'type' => 'subcategory',
+                'created_at' => new \DateTime,
+                'updated_at' => new \DateTime,
+            )
+        );
+
+        DB::table('ticket_categories')->insert(// 40
+            array(
+                'title' => 'User Re-Placement',
+                'text_color' => '#ffffff',
+                'bg_color' => '#cba321',
+                'parent_id' => null,
+                'slug' => 'userreplacement',
+                'type' => 'category',
+                'created_at' => new \DateTime,
+                'updated_at' => new \DateTime,
+            )
+        );
+
+        DB::table('ticket_categories')->insert(// 41
+            array(
                 'title' => 'User & Location',
                 'text_color' => '#ffffff',
                 'bg_color' => '#cba321',
-                'parent_id' => 17,
+                'parent_id' => 40,
                 'slug' => 'userlocation',
+                'type' => 'subcategory',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )

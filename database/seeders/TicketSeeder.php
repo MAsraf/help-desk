@@ -20,10 +20,24 @@ class TicketSeeder extends Seeder
         $faker = Factory::create('en_US');
 
         $category = [
-            'hardware' => ['pc', 'printer'],
-            'software' => ['os','apps','email'],
-            'network' => ['connectivity', 'security'],
-            'accountaccess' => ['useraccount', 'ecloud','networkaccessright'],
+            'hardware' => [
+                'pc' => ['repairpc','peripheral'],
+                'printer' => ['setupprinter','repairprinter','printerconnectivity','printerquality']
+            ],
+            'software' => [
+                'os' => ['installos','osperformance'],
+                'apps' => ['appinstall','applicense','appfunction'],
+                'email' => ['emailquota','emailperformance','emailconnectivity','emailsetup']
+            ],
+            'network' => [
+                'connectivity' => ['networkaccess','vpnconnectivity','vpnconfigure','networkperformance'],
+                'security' => ['firewall','virus']
+            ],
+            'accountaccess' => [
+                'useraccount' => ['passwordreset'], 
+                'ecloud' => ['unblockaccount'],
+                'networkaccessright'
+            ],
             'newuser' => ['createaccount'],
             'userreplacement' => ['userlocation'],
         ];
@@ -70,13 +84,29 @@ class TicketSeeder extends Seeder
             $number_strings[] = str_pad($i, 4, '0', STR_PAD_LEFT);
 
                 // Get a random parent key
-                $random_category = array_rand($category);
-                
-                // Get the subset for the selected parent key
-                $subset = $category[$random_category];
-                
-                // Get a random child from the subset
-                $random_subcategory = $subset[array_rand($subset)];
+$random_category = array_rand($category);
+
+// Get the subset for the selected parent key
+$subset = $category[$random_category];
+
+// Check if the subset is associative or sequential
+if (array_values($subset) === $subset) {
+    // Sequential array, so directly get a random subcategory
+    $random_subcategory = $subset[array_rand($subset)];
+    $random_issue = null; // No further issues in this case
+} else {
+    // Associative array, get a random key
+    $random_subcategory_key = array_rand($subset);
+    $random_subcategory = $subset[$random_subcategory_key];
+    
+    // Check if the subcategory contains further nested issues
+    if (is_array($random_subcategory) && !empty($random_subcategory)) {
+        $random_issue = $random_subcategory[array_rand($random_subcategory)];
+        $random_subcategory = $random_subcategory_key;
+    } else {
+        $random_issue = null;
+    }
+}
 
             DB::table('tickets')->insert(
                 array(
@@ -90,6 +120,7 @@ class TicketSeeder extends Seeder
                     'number' => $number_strings[$i],
                     'category' => $random_category,
                     'subcategory' => $random_subcategory,
+                    'issue' => $random_issue,
                     'created_at' => $formattedCreatedDate,
                     'inprogress_at' => $formattedUpdatedDate,
                     'closed_at' => $formattedClosedDate,

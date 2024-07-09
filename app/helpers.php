@@ -29,7 +29,19 @@ if (!function_exists('subcategories_list')) {
      */
     function subcategories_list(): array
     {
-        return TicketCategory::whereNotNull('parent_id')->pluck('title','slug')->toArray();
+        return TicketCategory::whereNotNull('parent_id')->where('type','subcategory')->pluck('title','slug')->toArray();
+    }
+}
+
+if (!function_exists('issues_list')) {
+    /**
+     * Return statuses list as an array of KEY (status id) => VALUE (status title)
+     *
+     * @return array
+     */
+    function issues_list(): array
+    {
+        return TicketCategory::whereNotNull('parent_id')->where('type','issue')->pluck('title','slug')->toArray();
     }
 }
 

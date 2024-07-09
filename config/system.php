@@ -164,6 +164,13 @@ return [
                     'permissions' => ['Manage ticket categories']
                 ],
                 [
+                    'title' => 'Manage issues',
+                    'route' => 'administration.ticket-issues',
+                    'icon' => 'fa-copy',
+                    'always_shown' => false,
+                    'permissions' => ['Manage ticket categories']
+                ],
+                [
                     'title' => 'Manage priorities',
                     'route' => 'administration.ticket-priorities',
                     'icon' => 'fa-arrow-up',

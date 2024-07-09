@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('title')->unique();
             $table->foreignId('parent_id')->nullable()->constrained('ticket_categories');
+            $table->string('type'); // New column to distinguish between category, subcategory, and issue
             $table->string('text_color');
             $table->string('bg_color');
             $table->string('slug',500);

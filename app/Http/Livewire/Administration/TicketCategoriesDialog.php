@@ -93,7 +93,8 @@ class TicketCategoriesDialog extends Component implements HasForms
                     'parent_id' => null,
                     'text_color' => $data['text_color'],
                     'bg_color' => $data['bg_color'],
-                    'slug' => Str::slug($data['title'], '_')
+                    'slug' => Str::slug($data['title'], '_'),
+                    'type' => 'category'
                 ]);
             Notification::make()
                 ->success()
@@ -107,7 +108,8 @@ class TicketCategoriesDialog extends Component implements HasForms
                     'parent_id' => $data['parent_id'],
                     'text_color' => $data['text_color'],
                     'bg_color' => $data['bg_color'],
-                    'slug' => Str::slug($data['title'], '_')
+                    'slug' => Str::slug($data['title'], '_'),
+                    'type' => 'subcategory'
                 ]);
             Notification::make()
                 ->success()
