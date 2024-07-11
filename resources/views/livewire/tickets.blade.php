@@ -114,6 +114,7 @@
                     <x-status-span :status="$ticket->status" />
                     <x-category-span :category="$ticket->category" />
                     <x-subcategory-span :subcategory="$ticket->subcategory" />
+                    <x-issue-span :issue="$ticket->issue" />
                     <span class="flex flex-row justify-center items-center gap-2 text-sm
                                 text-gray-700 font-medium">
                         {{ $ticket->comments_count }}

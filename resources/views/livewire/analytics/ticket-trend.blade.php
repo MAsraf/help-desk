@@ -34,7 +34,7 @@
     hover:shadow-lg text-base">Download Chart as PDF</button>
     <button onclick="generatePDF()" class="bg-success-600 text-white hover:bg-primary-800 px-4 py-1 rounded-lg shadow
     hover:shadow-lg text-base">Download Chart and Table as PDF</button>
-    <canvas id="trendChart" width="400" height="200"></canvas>
+    <canvas id="trendChart" width="400" height="150"></canvas>
 
     <button onclick="generatePDFType('table')" class="bg-success-600 text-white hover:bg-primary-800 px-4 py-1 rounded-lg shadow
     hover:shadow-lg text-base">Download Table as PDF</button>
@@ -42,21 +42,27 @@
         <thead class="text-xs text-gray-700 uppercase
         bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-            <th style="border: 1px solid black; padding: 8px; text-align: center;" scope="col" class="py-3 px-6">Date</th>
-            <th style="border: 1px solid black; padding: 8px; text-align: center;" scope="col" class="py-3 px-6">Ticket Creation</th>
-            <th style="border: 1px solid black; padding: 8px; text-align: center;" scope="col" class="py-3 px-6">Pending Tickets</th>
-            <th style="border: 1px solid black; padding: 8px; text-align: center;" scope="col" class="py-3 px-6">Closed Tickets</th>
+            <th style="border: 1px solid black; padding: 5px; text-align: center;" scope="col" class="py-3 px-6">Date</th>
+            <th style="border: 1px solid black; padding: 5px; text-align: center;" scope="col" class="py-3 px-6">Ticket Creation</th>
+            <th style="border: 1px solid black; padding: 5px; text-align: center;" scope="col" class="py-3 px-6">Pending Tickets</th>
+            <th style="border: 1px solid black; padding: 5px; text-align: center;" scope="col" class="py-3 px-6">Closed Tickets</th>
             </tr>
         </thead>
         <tbody>
             @foreach($labels as $index => $label)
                 <tr>
-                    <td style="border: 1px solid black; padding: 8px; height: 25px; vertical-align: middle; text-align: center;">{{ $label }}</td>
-                    <td style="border: 1px solid black; padding: 8px; height: 25px; vertical-align: middle; text-align: center;">{{ $ticketCreationData[$index] }}</td>
-                    <td style="border: 1px solid black; padding: 8px; height: 25px; vertical-align: middle; text-align: center;">{{ $pendingTicketData[$index] }}</td>
-                    <td style="border: 1px solid black; padding: 8px; height: 25px; vertical-align: middle; text-align: center;">{{ $closedTicketData[$index] }}</td>
+                    <td style="border: 1px solid black; padding: 5px; height: 20px; vertical-align: middle; text-align: center;">{{ $label }}</td>
+                    <td style="border: 1px solid black; padding: 5px; height: 20px; vertical-align: middle; text-align: center;">{{ $ticketCreationData[$index] }}</td>
+                    <td style="border: 1px solid black; padding: 5px; height: 20px; vertical-align: middle; text-align: center;">{{ $pendingTicketData[$index] }}</td>
+                    <td style="border: 1px solid black; padding: 5px; height: 20px; vertical-align: middle; text-align: center;">{{ $closedTicketData[$index] }}</td>
                 </tr>
             @endforeach
+                <tr>
+                    <td style="color: white">a</td>
+                    <td style="color: white">a</td>
+                    <td style="color: white">a</td>
+                    <td style="color: white">a</td>
+                </tr>
         </tbody>
     </table>
 

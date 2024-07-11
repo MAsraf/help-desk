@@ -68,10 +68,23 @@ class TicketDetailsSeeder extends Seeder
         //Ticket statuses
         DB::table('ticket_statuses')->insert(
             array(
-                'title' => 'Pending',
-                'text_color' => '#000000',
-                'bg_color' => '#b59797',
+                'title' => 'Open',
+                'text_color' => '#ffffff',
+                'bg_color' => '#c2c9c7',
                 'default' => 1,
+                'slug' => 'open',
+                'created_at' => new \DateTime,
+                'updated_at' => new \DateTime,
+            )
+        );
+
+        //Ticket statuses
+        DB::table('ticket_statuses')->insert(
+            array(
+                'title' => 'Pending',
+                'text_color' => '#ffffff',
+                'bg_color' => '#ff3342',
+                'default' => 0,
                 'slug' => 'pending',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
@@ -82,7 +95,7 @@ class TicketDetailsSeeder extends Seeder
             array(
                 'title' => 'In Progress',
                 'text_color' => '#ffffff',
-                'bg_color' => '#fd7e14',
+                'bg_color' => '#ffd133',
                 'default' => 0,
                 'slug' => 'inprogress',
                 'created_at' => new \DateTime,
@@ -94,7 +107,7 @@ class TicketDetailsSeeder extends Seeder
             array(
                 'title' => 'Resolved',
                 'text_color' => '#ffffff',
-                'bg_color' => '#6f42c1',
+                'bg_color' => '#33ff7a',
                 'default' => 0,
                 'slug' => 'resolved',
                 'created_at' => new \DateTime,
@@ -158,7 +171,7 @@ class TicketDetailsSeeder extends Seeder
                 'text_color' => '#ffffff',
                 'bg_color' => '#28a745',
                 'slug' => 'hardware',
-                'type' => 'category',
+                'level' => 'category',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -171,7 +184,7 @@ class TicketDetailsSeeder extends Seeder
                 'bg_color' => '#28a745',
                 'parent_id' => 1,
                 'slug' => 'pc',
-                'type' => 'subcategory',
+                'level' => 'subcategory',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -184,7 +197,8 @@ class TicketDetailsSeeder extends Seeder
                 'bg_color' => '#28a745',
                 'parent_id' => 2,
                 'slug' => 'repairpc',
-                'type' => 'issue',
+                'level' => 'issue',
+                'type' => 'incident',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -197,7 +211,8 @@ class TicketDetailsSeeder extends Seeder
                 'bg_color' => '#28a745',
                 'parent_id' => 2,
                 'slug' => 'peripheral',
-                'type' => 'issue',
+                'level' => 'issue',
+                'type' => 'incident',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -210,7 +225,7 @@ class TicketDetailsSeeder extends Seeder
                 'bg_color' => '#28a745',
                 'parent_id' => 1,
                 'slug' => 'printer',
-                'type' => 'subcategory',
+                'level' => 'subcategory',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -223,7 +238,8 @@ class TicketDetailsSeeder extends Seeder
                 'bg_color' => '#28a745',
                 'parent_id' => 5,
                 'slug' => 'setupprinter',
-                'type' => 'issue',
+                'level' => 'issue',
+                'type' => 'incident',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -236,7 +252,8 @@ class TicketDetailsSeeder extends Seeder
                 'bg_color' => '#28a745',
                 'parent_id' => 5,
                 'slug' => 'repairprinter',
-                'type' => 'issue',
+                'level' => 'issue',
+                'type' => 'incident',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -249,7 +266,8 @@ class TicketDetailsSeeder extends Seeder
                 'bg_color' => '#28a745',
                 'parent_id' => 5,
                 'slug' => 'printerconnectivity',
-                'type' => 'issue',
+                'level' => 'issue',
+                'type' => 'incident',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -262,7 +280,8 @@ class TicketDetailsSeeder extends Seeder
                 'bg_color' => '#28a745',
                 'parent_id' => 5,
                 'slug' => 'printerquality',
-                'type' => 'issue',
+                'level' => 'issue',
+                'type' => 'incident',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -275,7 +294,7 @@ class TicketDetailsSeeder extends Seeder
                 'text_color' => '#ffffff',
                 'bg_color' => '#aaa233',
                 'slug' => 'software',
-                'type' => 'category',
+                'level' => 'category',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -288,7 +307,7 @@ class TicketDetailsSeeder extends Seeder
                 'bg_color' => '#aaa233',
                 'parent_id' => 10,
                 'slug' => 'os',
-                'type' => 'subcategory',
+                'level' => 'subcategory',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -301,7 +320,8 @@ class TicketDetailsSeeder extends Seeder
                 'bg_color' => '#aaa233',
                 'parent_id' => 11,
                 'slug' => 'installos',
-                'type' => 'issue',
+                'level' => 'issue',
+                'type' => 'incident',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -314,7 +334,8 @@ class TicketDetailsSeeder extends Seeder
                 'bg_color' => '#aaa233',
                 'parent_id' => 11,
                 'slug' => 'osperformance',
-                'type' => 'issue',
+                'level' => 'issue',
+                'type' => 'incident',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -328,7 +349,7 @@ class TicketDetailsSeeder extends Seeder
                 'bg_color' => '#aaa233',
                 'parent_id' => 10,
                 'slug' => 'apps',
-                'type' => 'subcategory',
+                'level' => 'subcategory',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -341,7 +362,8 @@ class TicketDetailsSeeder extends Seeder
                 'bg_color' => '#aaa233',
                 'parent_id' => 14,
                 'slug' => 'appinstall',
-                'type' => 'issue',
+                'level' => 'issue',
+                'type' => 'incident',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -354,7 +376,8 @@ class TicketDetailsSeeder extends Seeder
                 'bg_color' => '#aaa233',
                 'parent_id' => 14,
                 'slug' => 'applicense',
-                'type' => 'issue',
+                'level' => 'issue',
+                'type' => 'incident',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -367,7 +390,8 @@ class TicketDetailsSeeder extends Seeder
                 'bg_color' => '#aaa233',
                 'parent_id' => 14,
                 'slug' => 'appfunction',
-                'type' => 'issue',
+                'level' => 'issue',
+                'type' => 'incident',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -380,7 +404,7 @@ class TicketDetailsSeeder extends Seeder
                 'bg_color' => '#aaa233',
                 'parent_id' => 10,
                 'slug' => 'email',
-                'type' => 'subcategory',
+                'level' => 'subcategory',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -393,7 +417,8 @@ class TicketDetailsSeeder extends Seeder
                 'bg_color' => '#aaa233',
                 'parent_id' => 18,
                 'slug' => 'emailquota',
-                'type' => 'issue',
+                'level' => 'issue',
+                'type' => 'changerequest',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -406,7 +431,8 @@ class TicketDetailsSeeder extends Seeder
                 'bg_color' => '#aaa233',
                 'parent_id' => 18,
                 'slug' => 'emailperformance',
-                'type' => 'issue',
+                'level' => 'issue',
+                'type' => 'incident',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -419,7 +445,8 @@ class TicketDetailsSeeder extends Seeder
                 'bg_color' => '#aaa233',
                 'parent_id' => 18,
                 'slug' => 'emailconnectivity',
-                'type' => 'issue',
+                'level' => 'issue',
+                'type' => 'incident',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -432,7 +459,8 @@ class TicketDetailsSeeder extends Seeder
                 'bg_color' => '#aaa233',
                 'parent_id' => 18,
                 'slug' => 'emailsetup',
-                'type' => 'issue',
+                'level' => 'issue',
+                'type' => 'servicerequest',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -445,7 +473,7 @@ class TicketDetailsSeeder extends Seeder
                 'bg_color' => '#ccc233',
                 'parent_id' => null,
                 'slug' => 'network',
-                'type' => 'category',
+                'level' => 'category',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -458,7 +486,7 @@ class TicketDetailsSeeder extends Seeder
                 'bg_color' => '#ccc233',
                 'parent_id' => 23,
                 'slug' => 'connectivity',
-                'type' => 'subcategory',
+                'level' => 'subcategory',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -471,7 +499,8 @@ class TicketDetailsSeeder extends Seeder
                 'bg_color' => '#ccc233',
                 'parent_id' => 24,
                 'slug' => 'networkaccess',
-                'type' => 'issue',
+                'level' => 'issue',
+                'type' => 'incident',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -484,7 +513,8 @@ class TicketDetailsSeeder extends Seeder
                 'bg_color' => '#ccc233',
                 'parent_id' => 24,
                 'slug' => 'vpnconnectivity',
-                'type' => 'issue',
+                'level' => 'issue',
+                'type' => 'incident',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -497,7 +527,8 @@ class TicketDetailsSeeder extends Seeder
                 'bg_color' => '#ccc233',
                 'parent_id' => 24,
                 'slug' => 'vpnconfigure',
-                'type' => 'issue',
+                'level' => 'issue',
+                'type' => 'servicerequest',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -510,7 +541,8 @@ class TicketDetailsSeeder extends Seeder
                 'bg_color' => '#ccc233',
                 'parent_id' => 24,
                 'slug' => 'networkperformance',
-                'type' => 'issue',
+                'level' => 'issue',
+                'type' => 'incident',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -524,7 +556,7 @@ class TicketDetailsSeeder extends Seeder
                 'bg_color' => '#ccc233',
                 'parent_id' => 23,
                 'slug' => 'security',
-                'type' => 'subcategory',
+                'level' => 'subcategory',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -537,7 +569,8 @@ class TicketDetailsSeeder extends Seeder
                 'bg_color' => '#ccc233',
                 'parent_id' => 29,
                 'slug' => 'firewall',
-                'type' => 'issue',
+                'level' => 'issue',
+                'type' => 'incident',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -550,7 +583,8 @@ class TicketDetailsSeeder extends Seeder
                 'bg_color' => '#ccc233',
                 'parent_id' => 29,
                 'slug' => 'virus',
-                'type' => 'issue',
+                'level' => 'issue',
+                'type' => 'incident',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -563,7 +597,7 @@ class TicketDetailsSeeder extends Seeder
                 'bg_color' => '#bbb444',
                 'parent_id' => null,
                 'slug' => 'accountaccess',
-                'type' => 'category',
+                'level' => 'category',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -576,7 +610,7 @@ class TicketDetailsSeeder extends Seeder
                 'bg_color' => '#bbb444',
                 'parent_id' => 32,
                 'slug' => 'useraccount',
-                'type' => 'subcategory',
+                'level' => 'subcategory',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -589,7 +623,8 @@ class TicketDetailsSeeder extends Seeder
                 'bg_color' => '#bbb444',
                 'parent_id' => 33,
                 'slug' => 'passwordreset',
-                'type' => 'issue',
+                'level' => 'issue',
+                'type' => 'changerequest',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -602,7 +637,7 @@ class TicketDetailsSeeder extends Seeder
                 'bg_color' => '#bbb444',
                 'parent_id' => 32,
                 'slug' => 'ecloud',
-                'type' => 'subcategory',
+                'level' => 'subcategory',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -615,7 +650,8 @@ class TicketDetailsSeeder extends Seeder
                 'bg_color' => '#bbb444',
                 'parent_id' => 35,
                 'slug' => 'unblockaccount',
-                'type' => 'issue',
+                'level' => 'issue',
+                'type' => 'changerequest',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -628,7 +664,8 @@ class TicketDetailsSeeder extends Seeder
                 'bg_color' => '#bbb444',
                 'parent_id' => 32,
                 'slug' => 'networkaccessright',
-                'type' => 'subcategory',
+                'level' => 'subcategory',
+                'type' => 'servicerequest',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -641,7 +678,7 @@ class TicketDetailsSeeder extends Seeder
                 'bg_color' => '#abc123',
                 'parent_id' => null,
                 'slug' => 'newuser',
-                'type' => 'category',
+                'level' => 'category',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -654,7 +691,8 @@ class TicketDetailsSeeder extends Seeder
                 'bg_color' => '#abc123',
                 'parent_id' => 38,
                 'slug' => 'createaccount',
-                'type' => 'subcategory',
+                'level' => 'subcategory',
+                'type' => 'servicerequest',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -667,7 +705,7 @@ class TicketDetailsSeeder extends Seeder
                 'bg_color' => '#cba321',
                 'parent_id' => null,
                 'slug' => 'userreplacement',
-                'type' => 'category',
+                'level' => 'category',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -680,7 +718,8 @@ class TicketDetailsSeeder extends Seeder
                 'bg_color' => '#cba321',
                 'parent_id' => 40,
                 'slug' => 'userlocation',
-                'type' => 'subcategory',
+                'level' => 'subcategory',
+                'type' => 'servicerequest',
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )

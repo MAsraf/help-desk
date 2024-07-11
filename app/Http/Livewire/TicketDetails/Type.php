@@ -4,6 +4,8 @@ namespace App\Http\Livewire\TicketDetails;
 
 use App\Jobs\TicketUpdatedJob;
 use App\Models\Ticket;
+use App\Models\TicketCategory;
+use App\Models\TicketType;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -19,8 +21,16 @@ class Type extends Component implements HasForms
 
     public function mount(): void
     {
+        $issue = $this->ticket->issue;
+        $subcategory = $this->ticket->subcategory;
+        if($issue || $subcategory){
+            $type = TicketType::where('slug',TicketCategory::where('slug',$issue ?? $subcategory)->pluck('type')->first())->get();
+        }
+        
+        
+        
         $this->form->fill([
-            'type' => $this->ticket->type
+            'type' => $type
         ]);
     }
 

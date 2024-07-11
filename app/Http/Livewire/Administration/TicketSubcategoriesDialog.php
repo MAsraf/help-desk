@@ -88,7 +88,7 @@ class TicketSubcategoriesDialog extends Component implements HasForms
                     'text_color' => TicketCategory::where('id',$parent)->pluck('text_color')->first(),
                     'bg_color' => TicketCategory::where('id',$parent)->pluck('bg_color')->first(),
                     'slug' => Str::slug($data['title'], '_'),
-                    'type' => 'subcategory'
+                    'level' => 'subcategory'
                 ]);
             Notification::make()
                 ->success()

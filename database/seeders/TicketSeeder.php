@@ -21,25 +21,25 @@ class TicketSeeder extends Seeder
 
         $category = [
             'hardware' => [
-                'pc' => ['repairpc','peripheral'],
-                'printer' => ['setupprinter','repairprinter','printerconnectivity','printerquality']
+                'pc' => ['repairpc' => 'incident' ,'peripheral' => 'incident'],
+                'printer' => ['setupprinter' => 'incident','repairprinter' => 'incident','printerconnectivity' => 'incident','printerquality' => 'incident']
             ],
             'software' => [
-                'os' => ['installos','osperformance'],
-                'apps' => ['appinstall','applicense','appfunction'],
-                'email' => ['emailquota','emailperformance','emailconnectivity','emailsetup']
+                'os' => ['installos' => 'incident','osperformance' => 'incident'],
+                'apps' => ['appinstall' => 'incident','applicense' => 'incident','appfunction' => 'incident'],
+                'email' => ['emailquota' => 'changerequest','emailperformance' => 'incident','emailconnectivity' => 'incident','emailsetup' => 'servicerequest']
             ],
             'network' => [
-                'connectivity' => ['networkaccess','vpnconnectivity','vpnconfigure','networkperformance'],
-                'security' => ['firewall','virus']
+                'connectivity' => ['networkaccess' => 'incident','vpnconnectivity' => 'incident','vpnconfigure' => 'servicerequest','networkperformance'  => 'incident'],
+                'security' => ['firewall'  => 'incident','virus'  => 'incident']
             ],
             'accountaccess' => [
-                'useraccount' => ['passwordreset'], 
-                'ecloud' => ['unblockaccount'],
-                'networkaccessright'
+                'useraccount' => ['passwordreset' => 'changerequest'], 
+                'ecloud' => ['unblockaccount' => 'changerequest'],
+                'networkaccessright' => 'servicerequest'
             ],
-            'newuser' => ['createaccount'],
-            'userreplacement' => ['userlocation'],
+            'newuser' => ['createaccount' => 'servicerequest'],
+            'userreplacement' => ['userlocation' => 'servicerequest'],
         ];
         $status = ['pending', 'inprogress', 'resolved', 'closed'];
         $priority = ['low', 'medium', 'high', 'critical'];
@@ -83,29 +83,27 @@ class TicketSeeder extends Seeder
 
             $number_strings[] = str_pad($i, 4, '0', STR_PAD_LEFT);
 
-                // Get a random parent key
-$random_category = array_rand($category);
+               // Randomly select a category
+$randomCategoryKey = array_rand($category);
+$randomCategory = $category[$randomCategoryKey];
 
-// Get the subset for the selected parent key
-$subset = $category[$random_category];
+// Randomly select a subcategory within the chosen category
+$randomSubcategoryKey = array_rand($randomCategory);
+$randomSubcategory = $randomCategory[$randomSubcategoryKey];
 
-// Check if the subset is associative or sequential
-if (array_values($subset) === $subset) {
-    // Sequential array, so directly get a random subcategory
-    $random_subcategory = $subset[array_rand($subset)];
-    $random_issue = null; // No further issues in this case
+// Initialize variables for issue and type
+$randomIssue = null;
+$randomType = null;
+
+// Check if the subcategory has issues
+if (is_array($randomSubcategory)) {
+    // Randomly select an issue within the chosen subcategory
+    $randomIssueKey = array_rand($randomSubcategory);
+    $randomIssue = $randomIssueKey;
+    $randomType = $randomSubcategory[$randomIssueKey];
 } else {
-    // Associative array, get a random key
-    $random_subcategory_key = array_rand($subset);
-    $random_subcategory = $subset[$random_subcategory_key];
-    
-    // Check if the subcategory contains further nested issues
-    if (is_array($random_subcategory) && !empty($random_subcategory)) {
-        $random_issue = $random_subcategory[array_rand($random_subcategory)];
-        $random_subcategory = $random_subcategory_key;
-    } else {
-        $random_issue = null;
-    }
+    // Subcategory directly provides the type
+    $randomType = $randomSubcategory;
 }
 
             DB::table('tickets')->insert(
@@ -118,9 +116,9 @@ if (array_values($subset) === $subset) {
                     'responsible_id' => $randomResponsible_id,
                     'type' => $randomType,
                     'number' => $number_strings[$i],
-                    'category' => $random_category,
-                    'subcategory' => $random_subcategory,
-                    'issue' => $random_issue,
+                    'category' => $randomCategoryKey,
+                    'subcategory' => $randomSubcategoryKey,
+                    'issue' => $randomIssue,
                     'created_at' => $formattedCreatedDate,
                     'inprogress_at' => $formattedUpdatedDate,
                     'closed_at' => $formattedClosedDate,

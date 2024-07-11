@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Administration;
 
 use App\Core\CrudDialogHelper;
 use App\Models\TicketCategory;
+use App\Models\TicketType;
 use Closure;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\Select;
@@ -34,6 +35,7 @@ class TicketIssuesDialog extends Component implements HasForms
             'parent_id' => TicketCategory::getCategoriesByParentId($this->issue->parent_id),
             'text_color' => $this->issue->text_color,
             'bg_color' => $this->issue->bg_color,
+            'type' => $this->issue->type,
         ]);
     }
 
@@ -54,7 +56,7 @@ class TicketIssuesDialog extends Component implements HasForms
                 ->label(__('Subcategory'))
                 ->required()
                 ->searchable()
-                ->options(fn () => TicketCategory::where('type','subcategory')->pluck('title','id')->toArray()),
+                ->options(fn () => TicketCategory::where('level','subcategory')->pluck('title','id')->toArray()),
             TextInput::make('title')
                 ->label(__('Issue name'))
                 ->maxLength(255)
@@ -68,7 +70,10 @@ class TicketIssuesDialog extends Component implements HasForms
                     }
                 )
                 ->required(),
-            
+            Select::make('type')
+                ->label(__('Type'))
+                ->options(fn () => TicketType::pluck('title','slug')->toArray())
+                ->required(),
         ];
     }
 
@@ -88,7 +93,8 @@ class TicketIssuesDialog extends Component implements HasForms
                     'text_color' => TicketCategory::where('id',$parent)->pluck('text_color')->first(),
                     'bg_color' => TicketCategory::where('id',$parent)->pluck('bg_color')->first(),
                     'slug' => Str::slug($data['title'], '_'),
-                    'type' => 'issue'
+                    'type' => $data['type'],
+                    'level' => 'issue'
                 ]);
             Notification::make()
                 ->success()
@@ -100,6 +106,7 @@ class TicketIssuesDialog extends Component implements HasForms
             $this->issue->parent_id = $data['parent_id'];
             $this->issue->text_color = TicketCategory::where('id',$parent)->pluck('text_color')->first();
             $this->issue->bg_color = TicketCategory::where('id',$parent)->pluck('bg_color')->first();
+            $this->issue->type = $data['type'];
             $this->issue->save();
             Notification::make()
                 ->success()

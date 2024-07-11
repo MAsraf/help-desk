@@ -6,6 +6,8 @@ use App\Models\Notice;
 use Carbon\Carbon;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
+use Filament\Tables\Columns\BooleanColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Builder;
@@ -79,6 +81,16 @@ class NoticeBanners extends Component implements HasTable
                     </span>
                     </div>
                 ')),
+            // ToggleColumn::make('status')
+            //     ->label('Active'),
+
+            BooleanColumn::make('status')
+                ->action(function($record, $column) {
+                    $name = $column->getName();
+                    $record->update([
+                        $name => !$record->$name
+                    ]);
+                }),    
         ];
     }
 

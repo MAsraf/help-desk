@@ -40,7 +40,7 @@ class TicketSubcategories extends Component implements HasTable
      */
     protected function getTableQuery(): Builder|Relation
     {
-        return TicketCategory::all()->where('type', 'subcategory')->toQuery();
+        return TicketCategory::all()->where('level', 'subcategory')->toQuery();
     }
    
     /**

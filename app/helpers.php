@@ -29,7 +29,7 @@ if (!function_exists('subcategories_list')) {
      */
     function subcategories_list(): array
     {
-        return TicketCategory::whereNotNull('parent_id')->where('type','subcategory')->pluck('title','slug')->toArray();
+        return TicketCategory::whereNotNull('parent_id')->where('level','subcategory')->pluck('title','slug')->toArray();
     }
 }
 
@@ -41,7 +41,7 @@ if (!function_exists('issues_list')) {
      */
     function issues_list(): array
     {
-        return TicketCategory::whereNotNull('parent_id')->where('type','issue')->pluck('title','slug')->toArray();
+        return TicketCategory::whereNotNull('parent_id')->where('level','issue')->pluck('title','slug')->toArray();
     }
 }
 

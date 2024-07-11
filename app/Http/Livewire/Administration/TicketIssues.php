@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Administration;
 
 use App\Models\TicketCategory;
+use App\Models\TicketType;
 use Carbon\Carbon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -40,7 +41,7 @@ class TicketIssues extends Component implements HasTable
      */
     protected function getTableQuery(): Builder|Relation
     {
-        return TicketCategory::all()->where('type', 'issue')->toQuery();
+        return TicketCategory::all()->where('level', 'issue')->toQuery();
     }
    
     /**
@@ -51,7 +52,7 @@ class TicketIssues extends Component implements HasTable
     protected function getTableColumns(): array
     {
         return [
-            TextColumn::make('issue')
+            TextColumn::make('title')
                 ->label(__('Issues'))
                 ->searchable()
                 ->sortable()
@@ -63,20 +64,34 @@ class TicketIssues extends Component implements HasTable
                     <i class="fa ' . $record->icon . '"></i>' . $record->title . '
                     </span>
                 ')),
-            TextColumn::make('subcategory')
+            TextColumn::make('parent_id')
                 ->label(__('Subcategory'))
                 ->searchable()
                 ->sortable()
                 ->formatStateUsing(fn(TicketCategory $record) =>
-                new HtmlString('
-                <span
-                    class="px-2 py-1 rounded-full text-sm flex items-center gap-2"
-                    style="color: ' . $record->text_color . '; background-color: ' . $record->bg_color . '"
-                >
-                ' . $record->where('id', $record->parent_id)->pluck('title')->implode(', ') . '
-                </span>
-            ')
-        ),
+                    new HtmlString('
+                    <span
+                        class="px-2 py-1 rounded-full text-sm flex items-center gap-2"
+                        style="color: ' . $record->text_color . '; background-color: ' . $record->bg_color . '"
+                    >
+                    ' . $record->where('id', $record->parent_id)->pluck('title')->implode(', ') . '
+                    </span>
+                    ')
+                ),
+            TextColumn::make('type')
+                ->label(__('Type'))
+                ->sortable()
+                ->searchable()
+                ->formatStateUsing(function (TicketCategory $record) {
+                    return new HtmlString('
+                    <span
+                        class="px-2 py-1 rounded-full text-sm flex items-center gap-2"
+                        
+                    >
+                    ' . (TicketType::where('slug',$record->type)->first()->title ?? 'N/A') . '
+                    </span>
+                    ');
+                }),
             TextColumn::make('created_at')
                 ->label(__('Created at'))
                 ->sortable()

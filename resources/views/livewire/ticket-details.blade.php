@@ -69,6 +69,10 @@
                 @livewire('ticket-details.subcategory', ['ticket' => $ticket])
             </div>
             <div class="w-full flex flex-col justify-start items-start gap-2">
+                <span class="text-gray-500 font-normal text-xs">@lang('Issue')</span>
+                @livewire('ticket-details.issue', ['ticket' => $ticket])
+            </div>
+            <div class="w-full flex flex-col justify-start items-start gap-2">
                 <span class="text-gray-500 font-normal text-xs">@lang('Priority')</span>
                 @livewire('ticket-details.priority', ['ticket' => $ticket])
             </div>

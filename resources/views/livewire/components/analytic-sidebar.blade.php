@@ -10,10 +10,10 @@
             <button @click="activeTab = 'content3'">Tickets by statuses</button>
         </a>
         <a style="display: block; color: black; padding: 16px; text-decoration: none;">
-            <button @click="activeTab = 'content4'; console.log('Clicked on Tickets assignments');">Tickets assignments</button>
+            <button @click="activeTab = 'content4';">Tickets assignments</button>
         </a>
         <a style="display: block; color: black; padding: 16px; text-decoration: none;">
-            <button @click="activeTab = 'content5'; console.log('Clicked on Ticket Trends');">Ticket Trends</button>        </a>
+            <button @click="activeTab = 'content5';">Ticket Trends</button>        </a>
     </div>
     <script>
 

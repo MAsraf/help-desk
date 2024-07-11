@@ -4,7 +4,6 @@ namespace App\Http\Livewire\TicketDetails;
 
 use App\Jobs\TicketUpdatedJob;
 use App\Models\Ticket;
-use App\Models\User;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -12,7 +11,7 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Livewire\Component;
 
-class Responsible extends Component implements HasForms
+class Issue extends Component implements HasForms
 {
     use InteractsWithForms;
 
@@ -22,13 +21,13 @@ class Responsible extends Component implements HasForms
     public function mount(): void
     {
         $this->form->fill([
-            'responsible_id' => $this->ticket->responsible_id
+            'issue' => $this->ticket->issue
         ]);
     }
 
     public function render()
     {
-        return view('livewire.ticket-details.responsible');
+        return view('livewire.ticket-details.issue');
     }
 
     /**
@@ -39,12 +38,17 @@ class Responsible extends Component implements HasForms
     protected function getFormSchema(): array
     {
         return [
-            Select::make('responsible_id')
-                ->label(__('Responsible'))
-                ->disableLabel()
-                ->placeholder(__('Responsible'))
-                ->options(User::all()->pluck('name', 'id')->toArray())
+            Select::make('issue')
+                ->label(__('Issue'))
                 ->required()
+                ->searchable()
+                ->disableLabel()
+                ->placeholder(__('Issue'))
+                ->options(function($state){
+                    $issues = issues_list();
+                    unset($issues[$state]);
+                    return $issues;
+                })
         ];
     }
 
@@ -66,43 +70,25 @@ class Responsible extends Component implements HasForms
     public function save(): void
     {
         $data = $this->form->getState();
-        $before = $this->ticket->responsible?->name ?? '-';
-        $this->ticket->responsible_id = $data['responsible_id'];
-        if($this->ticket->status == "open"){
-            $this->ticket->status = "pending";
-        }
+        $before = $this->ticket->issue ?? '-';
+        $this->ticket->issue = $data['issue'];
         $this->ticket->save();
         Notification::make()
             ->success()
-            ->title(__('Responsible updated'))
-            ->body(__('The ticket responsible has been successfully updated'))
+            ->title(__('Issue updated'))
+            ->body(__('The ticket issue has been successfully updated'))
             ->send();
         $this->form->fill([
-            'responsible_id' => $this->ticket->responsible_id
+            'issue' => $this->ticket->issue
         ]);
         $this->updating = false;
-        $this->ticket = $this->ticket->refresh();
         $this->emit('ticketSaved');
-        $this->emit('refreshStatusForm');  // Emit event to refresh status form
         TicketUpdatedJob::dispatch(
             $this->ticket,
-            __('Responsible'),
+            __('Issue'),
             $before,
-            ($this->ticket->responsible?->name ?? '-'),
+            ($this->ticket->issue ?? '-'),
             auth()->user()
         );
-    }
-
-    /**
-     * Assign ticket to the authenticated user
-     *
-     * @return void
-     */
-    public function assignToMe(): void
-    {
-        $this->form->fill([
-            'responsible_id' => auth()->user()->id
-        ]);
-        $this->save();
     }
 }

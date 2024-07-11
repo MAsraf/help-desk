@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use PhpOffice\PhpSpreadsheet\Calculation\Category;
 
 class TicketCategory extends Model
@@ -20,26 +19,37 @@ class TicketCategory extends Model
         'bg_color',
         'slug',
         'parent_id',
+        'level',
         'type',
     ];
+
+    public function parent()
+    {
+        return $this->belongsTo(Category::class, 'parent_id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany(Category::class, 'parent_id');
+    }
 
     public function subCategories(): HasMany
     {
         return $this->hasMany(Category::class, 'parent_id')
-            ->where('type', 'subcategory')
+            ->where('level', 'subcategory')
             ->select('parent_id', 'title');
     }
 
     public function issues(): HasMany
     {
         return $this->hasMany(Category::class, 'parent_id')
-            ->where('type', 'issue')
+            ->where('level', 'issue')
             ->select('parent_id', 'title');
     }
 
-    public function type(): HasOne
+    public function type()
     {
-
+        return $this->belongsTo(TicketType::class, 'type', 'slug');
     }
 
     public static function getSubCategories($slug)
@@ -89,7 +99,7 @@ class TicketCategory extends Model
     public static function getCategoriesByParentId($id)
     {
         if ($id){
-            return self::where('id', $id)->pluck('title', 'id')->first();
+            return self::where('id', $id)->pluck('id')->first();
         }
     }
 }

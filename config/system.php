@@ -61,11 +61,11 @@ return [
     'main_menu' => [
         [
             'title' => 'Dashboard',
-            'route' => 'home',
+            'route' => 'analytics',
             'icon' => 'fa-table-columns',
             'always_shown' => false,
             'show_notification_indicator' => false,
-            'permissions' => ['Can view Dashboard']
+            'permissions' => ['Can view Analytics page']
         ],
         [
             'title' => 'Manage notice banners',
@@ -82,14 +82,6 @@ return [
             'always_shown' => false,
             'show_notification_indicator' => false,
             'permissions' => ['Can view Announcement page']
-        ],
-        [
-            'title' => 'Analytics',
-            'route' => 'analytics',
-            'icon' => 'fa-chart-bar',
-            'always_shown' => false,
-            'show_notification_indicator' => false,
-            'permissions' => ['Can view Analytics page']
         ],
         [
             'title' => 'Tickets',
