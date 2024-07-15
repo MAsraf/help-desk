@@ -54,7 +54,7 @@ class TicketCategoriesDialog extends Component implements HasForms
             Select::make('parent_id')
                 ->label(__('Note: Select Category only when creating Subcategory'))
                 ->searchable()
-                ->options(categories_list()),
+                ->options(categories_list('id')),
             TextInput::make('title')
                 ->label(__('Category / Subcategory name'))
                 ->maxLength(255)
@@ -103,11 +103,12 @@ class TicketCategoriesDialog extends Component implements HasForms
                 ->send();
 
             }else{
+                $parent = $data['parent_id'];
                 TicketCategory::create([
                     'title' => $data['title'],
                     'parent_id' => $data['parent_id'],
-                    'text_color' => $data['text_color'],
-                    'bg_color' => $data['bg_color'],
+                    'text_color' => TicketCategory::where('id',$parent)->pluck('text_color')->first(),
+                    'bg_color' => TicketCategory::where('id',$parent)->pluck('bg_color')->first(),
                     'slug' => Str::slug($data['title'], '_'),
                     'level' => 'subcategory'
                 ]);

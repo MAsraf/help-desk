@@ -71,7 +71,7 @@ class TicketsDialog extends Component implements HasForms
                         ->label(__('Category'))
                         ->required()
                         ->searchable()
-                        ->options(categories_list())
+                        ->options(categories_list('slug'))
                         ->reactive() // Ensures Livewire updates subcategory options when category changes
                         ->afterStateUpdated(function (callable $set, $get, $state) { //get gives slug
                             $set('subcategory', null);  // Reset subcategory when category changes

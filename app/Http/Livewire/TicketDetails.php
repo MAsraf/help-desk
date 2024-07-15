@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Jobs\TicketUpdatedJob;
 use App\Models\Ticket;
 use Filament\Notifications\Notification;
 use Livewire\Component;
@@ -69,5 +70,33 @@ class TicketDetails extends Component
                 'number' => $ticket->ticket_number
             ])
         ]);
+    }
+
+    /**
+     * Close ticket
+     *
+     * @return void
+     */
+    public function closeTicket(): void
+    {
+        $before = $this->ticket->status ?? '-';
+        $this->ticket->status = 'closed';
+        $this->ticket->save();
+        Notification::make()
+            ->success()
+            ->title(__('Status updated'))
+            ->body(__('The ticket has been successfully closed. Thank you for enquiring with us!'))
+            ->send();
+
+        $this->ticket = $this->ticket->refresh();
+        $this->emit('ticketSaved');
+        $this->emit('refreshStatusForm');  // Emit event to refresh status form
+        TicketUpdatedJob::dispatch(
+            $this->ticket,
+            __('Status'),
+            $before,
+            ($this->ticket->status ?? '-'),
+            auth()->user()
+        );
     }
 }

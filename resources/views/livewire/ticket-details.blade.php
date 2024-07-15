@@ -14,8 +14,18 @@
                             wire:click="copyTicketUrl('{{ $ticket->id }}')"
                             title="@lang('Click to copy url to ticket')">{{ $ticket->ticket_number }}</button>
                 </span>
-                <div class="w-full">
+                <div class="w-3/4 flex">
                     @livewire('ticket-details.title', ['ticket' => $ticket])
+
+                    @if($ticket->status === 'resolved' && auth()->user()->can('Update own tickets')
+                        && (
+                            $ticket->owner_id === auth()->user()->id)
+                        )
+                    <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-8 rounded-full whitespace-nowrap"
+                        wire:click="closeTicket">
+                        Close Ticket
+                    </button>
+                    @endif
                 </div>
             </div>
         </div>

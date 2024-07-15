@@ -10,7 +10,8 @@ class Analytics extends Component
 {
     
     
-    
+    public $assignedTickets;
+    public $notAssignedTickets;
 
     public $startDate;
     public $endDate;
@@ -29,7 +30,25 @@ class Analytics extends Component
         return view('livewire.analytics');
     }
 
-    
+    /**
+     * Load authenticated user assigned tickets
+     *
+     * @return void
+     */
+    private function loadAssignedTickets(): void
+    {
+        $this->assignedTickets = Ticket::where('responsible_id', auth()->user()->id)->get();
+    }
+
+    /**
+     * Load not assigned tickets
+     *
+     * @return void
+     */
+    private function loadNotAssignedTickets(): void
+    {
+        $this->notAssignedTickets = Ticket::whereNull('responsible_id')->get();
+    }
 
     
 

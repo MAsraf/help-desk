@@ -15,9 +15,15 @@ if (!function_exists('categories_list')) {
      *
      * @return array
      */
-    function categories_list(): array
+    function categories_list(string $key = 'slug'): array
     {
-        return TicketCategory::whereNull('parent_id')->pluck('title','slug')->toArray();
+        $validKeys = ['id', 'slug'];
+
+        if (!in_array($key, $validKeys)) {
+            throw new InvalidArgumentException("Invalid key. Allowed keys are 'id' or 'slug'.");
+        }
+
+        return TicketCategory::whereNull('parent_id')->pluck('title',$key)->toArray();
     }
 }
 

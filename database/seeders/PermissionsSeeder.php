@@ -14,6 +14,7 @@ class PermissionsSeeder extends Seeder
         'View all tickets',
         'Update all tickets',
         'Delete all tickets',
+        'Update some tickets',
         'Create tickets',
         'View own tickets',
         'Update own tickets',
@@ -93,7 +94,8 @@ class PermissionsSeeder extends Seeder
         Role::create(["name" => "technician"])
         ->givePermissionTo([
             'View all tickets',
-            'Update all tickets',
+            'Update some tickets',
+            'Change status tickets',
             'Create tickets',
             'View own tickets',
             'Update own tickets',
