@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->longText('content');
+            $table->longText('content')->nullable();
             $table->string('status');
-            $table->string('priority');
+            $table->string('priority')->nullable();
             $table->foreignId('owner_id')->constrained('users');
             $table->foreignId('responsible_id')->nullable()->constrained('users');
             $table->date('inprogress_at')->nullable();

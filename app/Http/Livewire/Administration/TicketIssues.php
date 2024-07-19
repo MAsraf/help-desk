@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Administration;
 
 use App\Models\TicketCategory;
+use App\Models\TicketType;
 use Carbon\Carbon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -18,19 +19,19 @@ use pxlrbt\FilamentExcel\Actions\Tables\ExportAction;
 use pxlrbt\FilamentExcel\Columns\Column;
 use pxlrbt\FilamentExcel\Exports\ExcelExport;
 
-class TicketSubcategories extends Component implements HasTable
+class TicketIssues extends Component implements HasTable
 {
     use InteractsWithTable;
 
-    public $selectedSubcategory;
+    public $selectedIssue;
 
-    protected $listeners = ['subcategorySaved', 'subcategoryDeleted'];
+    protected $listeners = ['issueSaved', 'issueDeleted'];
 
-    public TicketCategory $subcategory;
+    public TicketCategory $issue;
 
     public function render()
     {
-        return view('livewire.administration.ticket-subcategories');
+        return view('livewire.administration.ticket-issues');
     }
 
     /**
@@ -40,7 +41,7 @@ class TicketSubcategories extends Component implements HasTable
      */
     protected function getTableQuery(): Builder|Relation
     {
-        return TicketCategory::all()->where('level', 'subcategory')->toQuery();
+        return TicketCategory::all()->where('level', 'issue')->toQuery();
     }
    
     /**
@@ -52,7 +53,7 @@ class TicketSubcategories extends Component implements HasTable
     {
         return [
             TextColumn::make('title')
-                ->label(__('Subcategory'))
+                ->label(__('Issues'))
                 ->searchable()
                 ->sortable()
                 ->formatStateUsing(fn(TicketCategory $record) => new HtmlString('
@@ -64,33 +65,33 @@ class TicketSubcategories extends Component implements HasTable
                     </span>
                 ')),
             TextColumn::make('parent_id')
-                ->label(__('Category'))
+                ->label(__('Subcategory'))
                 ->searchable()
                 ->sortable()
                 ->formatStateUsing(fn(TicketCategory $record) =>
-                new HtmlString('
-                <span
-                    class="px-2 py-1 rounded-full text-sm flex items-center gap-2"
-                    style="color: ' . $record->text_color . '; background-color: ' . $record->bg_color . '"
-                >
-                ' . $record->where('id', $record->parent_id)->pluck('title')->implode(', ') . '
-                </span>
-            ')
-        ),
-
-        TextColumn::make('issue')
-                ->label(__('Issues'))
-                ->searchable()
-                ->sortable()
-                ->formatStateUsing(fn(TicketCategory $record) => new HtmlString('
+                    new HtmlString('
                     <span
                         class="px-2 py-1 rounded-full text-sm flex items-center gap-2"
                         style="color: ' . $record->text_color . '; background-color: ' . $record->bg_color . '"
                     >
-                    ' . $record->where('parent_id',$record->id)->pluck('title')->implode(', ') . '
+                    ' . $record->where('id', $record->parent_id)->pluck('title')->implode(', ') . '
                     </span>
-                ')),
-
+                    ')
+                ),
+            TextColumn::make('type')
+                ->label(__('Type'))
+                ->sortable()
+                ->searchable()
+                ->formatStateUsing(function (TicketCategory $record) {
+                    return new HtmlString('
+                    <span
+                        class="px-2 py-1 rounded-full text-sm flex items-center gap-2"
+                        
+                    >
+                    ' . (TicketType::where('slug',$record->type)->first()->title ?? 'N/A') . '
+                    </span>
+                    ');
+                }),
             TextColumn::make('created_at')
                 ->label(__('Created at'))
                 ->sortable()
@@ -111,7 +112,7 @@ class TicketSubcategories extends Component implements HasTable
                 ->icon('heroicon-o-pencil')
                 ->link()
                 ->label(__('Edit category'))
-                ->action(fn(TicketCategory $record) => $this->updateSubcategory($record->id))
+                ->action(fn(TicketCategory $record) => $this->updateIssue($record->id))
         ];
     }
 
@@ -163,56 +164,56 @@ class TicketSubcategories extends Component implements HasTable
     }
 
     /**
-     * Show update subcategory dialog
+     * Show update issue dialog
      *
      * @param $id
      * @return void
      */
-    public function updateSubcategory($id)
+    public function updateIssue($id)
     {
-        $this->selectedSubcategory = TicketCategory::find($id);
-        $this->dispatchBrowserEvent('toggleSubcategoryModal');
+        $this->selectedIssue = TicketCategory::find($id);
+        $this->dispatchBrowserEvent('toggleIssueModal');
     }
 
     /**
-     * Show create subcategory dialog
+     * Show create issue dialog
      *
      * @return void
      */
-    public function createSubcategory()
+    public function createIssue()
     {
-        $this->selectedSubcategory = new TicketCategory();
-        $this->dispatchBrowserEvent('toggleSubcategoryModal');
+        $this->selectedIssue = new TicketCategory();
+        $this->dispatchBrowserEvent('toggleIssueModal');
     }
 
     /**
-     * Cancel and close subcategory create / update dialog
+     * Cancel and close issue create / update dialog
      *
      * @return void
      */
-    public function cancelSubcategory()
+    public function cancelIssue()
     {
-        $this->selectedSubcategory = null;
-        $this->dispatchBrowserEvent('toggleSubcategoryModal');
+        $this->selectedIssue = null;
+        $this->dispatchBrowserEvent('toggleIssueModal');
     }
 
     /**
-     * Event launched after a subcategory is created / updated
+     * Event launched after a issue is created / updated
      *
      * @return void
      */
-    public function subcategorySaved()
+    public function issueSaved()
     {
-        $this->cancelSubcategory();
+        $this->cancelIssue();
     }
 
     /**
-     * Event launched after a subcategory is deleted
+     * Event launched after a issue is deleted
      *
      * @return void
      */
-    public function subcategoryDeleted()
+    public function issueDeleted()
     {
-        $this->subcategorySaved();
+        $this->issueSaved();
     }
 }

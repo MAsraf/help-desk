@@ -36,6 +36,12 @@ class Tickets extends Component implements HasForms
                 'Assigned to me',
                 'Created by me',
             ];
+        }else if(auth()->user()->hasRole('Head of Department')){
+            $this->menu = [
+                'Network Access Right Requests',
+                'Created by me',
+            ];
+        
         }else if(auth()->user()->hasRole('technician')){
             $this->menu = [
                 'Assigned to me',
@@ -56,17 +62,7 @@ class Tickets extends Component implements HasForms
     {
         $query = Ticket::query();
         $query->withCount('comments');
-        // if (auth()->user()->can('View own tickets') && !auth()->user()->can('View all tickets')) {
-        //     $query->where(function ($query) {
-        //         $query->where('owner_id', auth()->user()->id)
-        //             ->orWhere('responsible_id', auth()->user()->id)
-        //             ->orWhereHas('project', function ($query) {
-        //                 $query->whereHas('company', function ($query) {
-        //                     $query->whereIn('companies.id', auth()->user()->ownCompanies->pluck('id')->toArray());
-        //                 });
-        //             });
-        //     });
-        // }
+
         if ($this->activeMenu === 'Unassigned') {
             $query->whereNull('responsible_id');
         }
@@ -75,6 +71,9 @@ class Tickets extends Component implements HasForms
         }
         if ($this->activeMenu === 'Created by me') {
             $query->where('owner_id', auth()->user()->id);
+        }
+        if ($this->activeMenu === 'Network Access Right Requests') {
+            $query->where('subcategory', 'networkaccessright');
         }
         if ($this->search) {
             $query->where(function ($query) {

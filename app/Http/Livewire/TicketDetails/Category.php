@@ -18,11 +18,23 @@ class Category extends Component implements HasForms
     public Ticket $ticket;
     public bool $updating = false;
 
+    protected $listeners = ['refreshForm'];
+
     public function mount(): void
     {
         $this->form->fill([
             'category' => $this->ticket->category
         ]);
+        
+    }
+
+    public function refreshForm(): void
+    {
+        $this->ticket = $this->ticket->refresh();
+        $this->form->fill([
+            'category' => $this->ticket->category
+        ]);
+        $this->updating = false;
     }
 
     public function render()
@@ -46,7 +58,6 @@ class Category extends Component implements HasForms
                 ->placeholder(__('Category'))
                 ->options(function($state){
                     $categories = categories_list();
-                    unset($categories[$state]);
                     return $categories;
                 })
         ];
@@ -72,6 +83,9 @@ class Category extends Component implements HasForms
         $data = $this->form->getState();
         $before = $this->ticket->category ?? '-';
         $this->ticket->category = $data['category'];
+        $this->ticket->subcategory = 'Select new subcategory';
+        $this->ticket->issue = 'Select new issue';
+        $this->ticket->type = 'Select new type';
         $this->ticket->save();
         Notification::make()
             ->success()
@@ -82,7 +96,10 @@ class Category extends Component implements HasForms
             'category' => $this->ticket->category
         ]);
         $this->updating = false;
+        $this->ticket = $this->ticket->refresh();
         $this->emit('ticketSaved');
+        $this->emit('refreshForm');  // Emit event to refresh ticket details form
+
         TicketUpdatedJob::dispatch(
             $this->ticket,
             __('Category'),

@@ -12,8 +12,7 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Livewire\Component;
 
-
-class Subcategory extends Component implements HasForms
+class Issue extends Component implements HasForms
 {
     use InteractsWithForms;
 
@@ -25,23 +24,22 @@ class Subcategory extends Component implements HasForms
     public function mount(): void
     {
         $this->form->fill([
-            'subcategory' => $this->ticket->subcategory
+            'issue' => $this->ticket->issue
         ]);
-        
     }
 
     public function refreshForm(): void
     {
         $this->ticket = $this->ticket->refresh();
         $this->form->fill([
-            'subcategory' => $this->ticket->subcategory
+            'issue' => $this->ticket->issue
         ]);
         $this->updating = false;
     }
 
     public function render()
     {
-        return view('livewire.ticket-details.subcategory');
+        return view('livewire.ticket-details.issue');
     }
 
     /**
@@ -52,13 +50,22 @@ class Subcategory extends Component implements HasForms
     protected function getFormSchema(): array
     {
         return [
-            Select::make('subcategory')
-                ->label(__('Subcategory'))
+            Select::make('issue')
+                ->label(__('Issue'))
                 ->required()
                 ->searchable()
                 ->disableLabel()
-                ->placeholder(__('Subcategory'))
-                ->options(fn ($get): array => TicketCategory::getSubCategories($this->ticket->category))
+                ->placeholder(__('Issue'))
+                ->options(function ($get): array {
+                    if($this->ticket->subcategory != "Select new subcategory" && $this->ticket->category != null)
+                        $arrayIssues = TicketCategory::getIssues($this->ticket->subcategory);
+                    elseif($this->ticket->subcategory == "Select new subcategory")
+                    {
+                        $arrayIssues = TicketCategory::getIssuesByCategory($this->ticket->category);
+                    }
+
+                    return $arrayIssues;
+                })
         ];
     }
 
@@ -80,27 +87,27 @@ class Subcategory extends Component implements HasForms
     public function save(): void
     {
         $data = $this->form->getState();
-        $before = $this->ticket->subcategory ?? '-';
-        $this->ticket->subcategory = $data['subcategory'];
-        $this->ticket->issue = 'Select new issue';
-        $this->ticket->type = 'Select new type';
+        $before = $this->ticket->issue ?? '-';
+        $this->ticket->issue = $data['issue'];
+        $this->ticket->subcategory = TicketCategory::getChosenCategory($data['issue']);
         $this->ticket->save();
         Notification::make()
             ->success()
-            ->title(__('Subcategory updated'))
-            ->body(__('The ticket subcategory has been successfully updated'))
+            ->title(__('Issue updated'))
+            ->body(__('The ticket issue has been successfully updated'))
             ->send();
         $this->form->fill([
-            'subcategory' => $this->ticket->subcategory
+            'issue' => $this->ticket->issue
         ]);
         $this->updating = false;
+        $this->ticket = $this->ticket->refresh();
         $this->emit('ticketSaved');
         $this->emit('refreshForm');  // Emit event to refresh ticket details form
         TicketUpdatedJob::dispatch(
             $this->ticket,
-            __('Subcategory'),
+            __('Issue'),
             $before,
-            ($this->ticket->subcategory ?? '-'),
+            ($this->ticket->issue ?? '-'),
             auth()->user()
         );
     }

@@ -14,6 +14,7 @@ class PermissionsSeeder extends Seeder
         'View all tickets',
         'Update all tickets',
         'Delete all tickets',
+        'Update some tickets',
         'Create tickets',
         'View own tickets',
         'Update own tickets',
@@ -90,10 +91,23 @@ class PermissionsSeeder extends Seeder
             'Delete user roles'
         ]);
 
-        Role::create(["name" => "technician"])
+        Role::create(["name" => "Head of Department"])
         ->givePermissionTo([
             'View all tickets',
             'Update all tickets',
+            'Create tickets',
+            'View own tickets',
+            'Update own tickets',
+            'Delete own tickets',
+            'Can view Tickets page',
+            'Can view Dashboard',
+        ]);
+
+        Role::create(["name" => "technician"])
+        ->givePermissionTo([
+            'View all tickets',
+            'Update some tickets',
+            'Change status tickets',
             'Create tickets',
             'View own tickets',
             'Update own tickets',
@@ -114,13 +128,14 @@ class PermissionsSeeder extends Seeder
         ]);
 
         User::find(1)->assignRole('administrator');
-        User::find(2)->assignRole('technician');
+        User::find(2)->assignRole('Head of Department');
         User::find(3)->assignRole('technician');
-        User::find(4)->assignRole('user');
+        User::find(4)->assignRole('technician');
         User::find(5)->assignRole('user');
         User::find(6)->assignRole('user');
         User::find(7)->assignRole('user');
         User::find(8)->assignRole('user');
+        User::find(9)->assignRole('user');
 
     }
 }

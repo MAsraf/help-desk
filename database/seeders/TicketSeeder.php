@@ -20,18 +20,32 @@ class TicketSeeder extends Seeder
         $faker = Factory::create('en_US');
 
         $category = [
-            'hardware' => ['pc', 'printer'],
-            'software' => ['os','apps','email'],
-            'network' => ['connectivity', 'security'],
-            'accountaccess' => ['useraccount', 'ecloud','networkaccessright'],
-            'newuser' => ['createaccount'],
-            'userreplacement' => ['userlocation'],
+            'hardware' => [
+                'pc' => ['repairpc' => 'incident' ,'peripheral' => 'incident'],
+                'printer' => ['setupprinter' => 'incident','repairprinter' => 'incident','printerconnectivity' => 'incident','printerquality' => 'incident']
+            ],
+            'software' => [
+                'os' => ['installos' => 'incident','osperformance' => 'incident'],
+                'apps' => ['appinstall' => 'incident','applicense' => 'incident','appfunction' => 'incident'],
+                'email' => ['emailquota' => 'changerequest','emailperformance' => 'incident','emailconnectivity' => 'incident','emailsetup' => 'servicerequest']
+            ],
+            'network' => [
+                'connectivity' => ['networkaccess' => 'incident','vpnconnectivity' => 'incident','vpnconfigure' => 'servicerequest','networkperformance'  => 'incident'],
+                'security' => ['firewall'  => 'incident','virus'  => 'incident']
+            ],
+            'accountaccess' => [
+                'useraccount' => ['passwordreset' => 'changerequest'], 
+                'ecloud' => ['unblockaccount' => 'changerequest'],
+                'networkaccessright' => 'servicerequest'
+            ],
+            'newuser' => ['createaccount' => 'servicerequest'],
+            'userreplacement' => ['userlocation' => 'servicerequest'],
         ];
         $status = ['pending', 'inprogress', 'resolved', 'closed'];
         $priority = ['low', 'medium', 'high', 'critical'];
         $type = ['incident', 'servicerequest', 'changerequest'];
         $owner_id = [4,5,6,7,8];
-        $responsible_id = [2,3];
+        $responsible_id = [3,4];
         $number_strings = [];
 
         // Define the start and end dates
@@ -69,14 +83,28 @@ class TicketSeeder extends Seeder
 
             $number_strings[] = str_pad($i, 4, '0', STR_PAD_LEFT);
 
-                // Get a random parent key
-                $random_category = array_rand($category);
-                
-                // Get the subset for the selected parent key
-                $subset = $category[$random_category];
-                
-                // Get a random child from the subset
-                $random_subcategory = $subset[array_rand($subset)];
+               // Randomly select a category
+$randomCategoryKey = array_rand($category);
+$randomCategory = $category[$randomCategoryKey];
+
+// Randomly select a subcategory within the chosen category
+$randomSubcategoryKey = array_rand($randomCategory);
+$randomSubcategory = $randomCategory[$randomSubcategoryKey];
+
+// Initialize variables for issue and type
+$randomIssue = null;
+$randomType = null;
+
+// Check if the subcategory has issues
+if (is_array($randomSubcategory)) {
+    // Randomly select an issue within the chosen subcategory
+    $randomIssueKey = array_rand($randomSubcategory);
+    $randomIssue = $randomIssueKey;
+    $randomType = $randomSubcategory[$randomIssueKey];
+} else {
+    // Subcategory directly provides the type
+    $randomType = $randomSubcategory;
+}
 
             DB::table('tickets')->insert(
                 array(
@@ -88,8 +116,9 @@ class TicketSeeder extends Seeder
                     'responsible_id' => $randomResponsible_id,
                     'type' => $randomType,
                     'number' => $number_strings[$i],
-                    'category' => $random_category,
-                    'subcategory' => $random_subcategory,
+                    'category' => $randomCategoryKey,
+                    'subcategory' => $randomSubcategoryKey,
+                    'issue' => $randomIssue,
                     'created_at' => $formattedCreatedDate,
                     'inprogress_at' => $formattedUpdatedDate,
                     'closed_at' => $formattedClosedDate,

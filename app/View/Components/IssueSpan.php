@@ -5,20 +5,20 @@ namespace App\View\Components;
 use App\Models\TicketCategory;
 use Illuminate\View\Component;
 
-class SubcategorySpan extends Component
+class IssueSpan extends Component
 {
-    public $subcategory;
+    public $issue;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($subcategory)
+    public function __construct($issue)
     {
-        $this->subcategory = TicketCategory::where('slug', $subcategory)->first();
-        if($subcategory == "Select new subcategory"){
-            $this->subcategory = "Select new subcategory";
+        $this->issue = TicketCategory::where('slug', $issue)->first();
+        if($issue == "Select new issue"){
+            $this->issue = "Select new issue";
         }
     }
 
@@ -29,6 +29,6 @@ class SubcategorySpan extends Component
      */
     public function render()
     {
-        return view('components.subcategory-span');
+        return view('components.issue-span');
     }
 }

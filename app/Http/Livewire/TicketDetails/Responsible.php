@@ -68,8 +68,8 @@ class Responsible extends Component implements HasForms
         $data = $this->form->getState();
         $before = $this->ticket->responsible?->name ?? '-';
         $this->ticket->responsible_id = $data['responsible_id'];
-        if($this->ticket->status == "pending"){
-            $this->ticket->status = "inprogress";
+        if($this->ticket->status == "open"){
+            $this->ticket->status = "pending";
         }
         $this->ticket->save();
         Notification::make()

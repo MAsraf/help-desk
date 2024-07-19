@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Administration;
 
 use App\Core\CrudDialogHelper;
 use App\Models\TicketCategory;
+use App\Models\TicketType;
 use Closure;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\Select;
@@ -18,28 +19,29 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Unique;
 use Livewire\Component;
 
-class TicketSubcategoriesDialog extends Component implements HasForms
+class TicketIssuesDialog extends Component implements HasForms
 {
     use InteractsWithForms;
     use CrudDialogHelper;
 
-    public TicketCategory $subcategory;
+    public TicketCategory $issue;
 
-    protected $listeners = ['doDeleteSubcategory', 'cancelDeleteSubcategory'];
+    protected $listeners = ['doDeleteIssue', 'cancelDeleteIssue'];
 
     public function mount(): void
     {
         $this->form->fill([
-            'title' => $this->subcategory->title,
-            'parent_id' => TicketCategory::getCategoriesByParentId($this->subcategory->parent_id),
-            'text_color' => $this->subcategory->text_color,
-            'bg_color' => $this->subcategory->bg_color,
+            'title' => $this->issue->title,
+            'parent_id' => TicketCategory::getCategoriesByParentId($this->issue->parent_id),
+            'text_color' => $this->issue->text_color,
+            'bg_color' => $this->issue->bg_color,
+            'type' => $this->issue->type,
         ]);
     }
 
     public function render()
     {
-        return view('livewire.administration.ticket-subcategories-dialog');
+        return view('livewire.administration.ticket-issues-dialog');
     }
 
     /**
@@ -51,24 +53,27 @@ class TicketSubcategoriesDialog extends Component implements HasForms
     {
         return [
             Select::make('parent_id')
-                ->label(__('Category'))
+                ->label(__('Subcategory'))
                 ->required()
                 ->searchable()
-                ->options(fn () => TicketCategory::whereNull('parent_id')->pluck('title','id')->toArray()),
+                ->options(fn () => TicketCategory::where('level','subcategory')->pluck('title','id')->toArray()),
             TextInput::make('title')
-                ->label(__('Subcategory name'))
+                ->label(__('Issue name'))
                 ->maxLength(255)
                 ->unique(
                     table: TicketCategory::class,
                     column: 'title',
-                    ignorable: fn () => $this->subcategory,
+                    ignorable: fn () => $this->issue,
                     callback: function (Unique $rule)
                     {
                         return $rule->withoutTrashed();
                     }
                 )
                 ->required(),
-            
+            Select::make('type')
+                ->label(__('Type'))
+                ->options(fn () => TicketType::pluck('title','slug')->toArray())
+                ->required(),
         ];
     }
 
@@ -81,75 +86,77 @@ class TicketSubcategoriesDialog extends Component implements HasForms
     {
         $data = $this->form->getState();
         $parent = $data['parent_id'];
-        if (!$this->subcategory?->id) {
+        if (!$this->issue?->id) {
                 TicketCategory::create([
                     'title' => $data['title'],
                     'parent_id' => $data['parent_id'],
                     'text_color' => TicketCategory::where('id',$parent)->pluck('text_color')->first(),
                     'bg_color' => TicketCategory::where('id',$parent)->pluck('bg_color')->first(),
                     'slug' => Str::slug($data['title'], '_'),
-                    'level' => 'subcategory'
+                    'type' => $data['type'],
+                    'level' => 'issue'
                 ]);
             Notification::make()
                 ->success()
-                ->title(__('Subcategory created'))
-                ->body(__('The subcategory has been created'))
+                ->title(__('Issue created'))
+                ->body(__('The issue has been created'))
                 ->send();
         } else {
-            $this->subcategory->title = $data['title'];
-            $this->subcategory->parent_id = $data['parent_id'];
-            $this->subcategory->text_color = TicketCategory::where('id',$parent)->pluck('text_color')->first();
-            $this->subcategory->bg_color = TicketCategory::where('id',$parent)->pluck('bg_color')->first();
-            $this->subcategory->save();
+            $this->issue->title = $data['title'];
+            $this->issue->parent_id = $data['parent_id'];
+            $this->issue->text_color = TicketCategory::where('id',$parent)->pluck('text_color')->first();
+            $this->issue->bg_color = TicketCategory::where('id',$parent)->pluck('bg_color')->first();
+            $this->issue->type = $data['type'];
+            $this->issue->save();
             Notification::make()
                 ->success()
                 ->title(__('Category updated'))
                 ->body(__('The category\'s details has been updated'))
                 ->send();
         }
-        $this->emit('subcategorySaved');
+        $this->emit('issueSaved');
     }
 
     /**
-     * Delete an existing category
+     * Delete an existing issue
      *
      * @return void
      */
-    public function doDeleteSubcategory(): void
+    public function doDeleteIssue(): void
     {
-        $this->subcategory->delete();
+        $this->issue->delete();
         $this->deleteConfirmationOpened = false;
-        $this->emit('categoryDeleted');
+        $this->emit('issueDeleted');
         Notification::make()
             ->success()
-            ->title(__('Subcategory deleted'))
-            ->body(__('The subcategory has been deleted'))
+            ->title(__('Issue deleted'))
+            ->body(__('The issue has been deleted'))
             ->send();
     }
 
     /**
-     * Cancel the deletion of a subcategory
+     * Cancel the deletion of a issue
      *
      * @return void
      */
-    public function cancelDeleteSubcategory(): void
+    public function cancelDeleteIssue(): void
     {
         $this->deleteConfirmationOpened = false;
     }
 
     /**
-     * Show the delete subcategory confirmation dialog
+     * Show the delete issue confirmation dialog
      *
      * @return void
      * @throws \Exception
      */
-    public function deleteSubcategory(): void
+    public function deleteIssue(): void
     {
         $this->deleteConfirmation(
-            __('Subcategory deletion'),
-            __('Are you sure you want to delete this subcategory?'),
-            'doDeleteSubcategory',
-            'cancelDeleteSubcategory'
+            __('Issue deletion'),
+            __('Are you sure you want to delete this issue?'),
+            'doDeleteIssue',
+            'cancelDeleteIssue'
         );
     }
 }

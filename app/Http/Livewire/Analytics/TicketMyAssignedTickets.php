@@ -1,33 +1,24 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Analytics;
 
 use App\Models\Ticket;
-use App\Models\TicketStatus;
 use Livewire\Component;
 
-class Analytics extends Component
+class TicketMyAssignedTickets extends Component
 {
-    
-    
-    public $assignedTickets;
     public $notAssignedTickets;
-
-    public $startDate;
-    public $endDate;
+    public $assignedTickets;
 
     public function mount(): void
     {
-        $this->startDate = now()->startOfMonth()->toDateString();
-        $this->endDate = now()->endOfMonth()->toDateString();
-
-        $this->loadAssignedTickets();
         $this->loadNotAssignedTickets();
+        $this->loadAssignedTickets();
     }
 
     public function render()
     {
-        return view('livewire.analytics');
+        return view('livewire.analytics.ticket-my-assigned-tickets');
     }
 
     /**
@@ -49,8 +40,4 @@ class Analytics extends Component
     {
         $this->notAssignedTickets = Ticket::whereNull('responsible_id')->get();
     }
-
-    
-
-    
 }

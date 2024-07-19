@@ -39,7 +39,7 @@
                     || (
                         auth()->user()->can('Update own tickets')
                         && (
-                            $ticket->owner_id === auth()->user()
+                            $ticket->owner_id === auth()->user()->id
                             || $ticket->responsible_id === auth()->user()->id
                             )
                         )

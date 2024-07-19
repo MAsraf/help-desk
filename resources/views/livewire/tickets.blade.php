@@ -109,11 +109,12 @@
                     {{ Str::limit(htmlspecialchars(strip_tags($ticket->content)), 400) }}
                 </span>
                 <div class="w-full flex flex-row justify-start items-center gap-3 mt-2 overflow-x-auto">
-                    <x-type-span :type="$ticket->type" />
                     <x-priority-span :priority="$ticket->priority" />
                     <x-status-span :status="$ticket->status" />
                     <x-category-span :category="$ticket->category" />
                     <x-subcategory-span :subcategory="$ticket->subcategory" />
+                    <x-issue-span :issue="$ticket->issue" />
+                    <x-type-span :type="$ticket->type" />
                     <span class="flex flex-row justify-center items-center gap-2 text-sm
                                 text-gray-700 font-medium">
                         {{ $ticket->comments_count }}

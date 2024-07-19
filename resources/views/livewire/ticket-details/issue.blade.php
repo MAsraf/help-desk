@@ -19,7 +19,7 @@
         </form>
     @else
         <div class="w-full flex flex-row justify-start items-center gap-5 updating-section">
-            <x-subcategory-span :subcategory="$ticket->subcategory"/>
+            <x-issue-span :issue="$ticket->issue"/>
             @if(
                 auth()->user()->can('Update all tickets')
                 
