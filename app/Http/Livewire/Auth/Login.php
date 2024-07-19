@@ -101,6 +101,9 @@ class Login extends Component implements HasForms
                         case 'administrator':
                             redirect()->to(route('analytics'));
                             break;
+                        case 'Head of Department':
+                            redirect()->to(route('tickets'));
+                            break;
                         case 'technician':
                             redirect()->to(route('tickets'));
                             break;

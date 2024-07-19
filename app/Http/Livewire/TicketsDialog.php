@@ -90,7 +90,7 @@ class TicketsDialog extends Component implements HasForms
                             $set('issue', null);
                             if($state == ('networkaccessright' || 'createaccount' || 'userlocation'))
                             $this->setIssueValue($state);
-                    }), // Set category when categories changes=
+                    }), // Set category when categories changes
                     Select::make('issue')
                         ->label(__('Issue'))
                         ->required(function ($get): bool { 
@@ -115,20 +115,15 @@ class TicketsDialog extends Component implements HasForms
                             if($get('issue') != null){
                                 $set('subcategory', TicketCategory::getChosenCategory($state));
                                 $set('category', TicketCategory::getChosenCategory($get('subcategory')));
+                                $this->setIssueValue(null);
                             }
                     }),
                 ]),
             Section::make('Network Access Right')
-                ->description(fn () => new HtmlString('<span style="color: #FF0000;">Need approval from HOD department</span>'), 'above')
+                ->description(fn () => new HtmlString('<span style="color: #FF0000;">Need approval from HOD department</span><br>Detail User:'), 'above')
                 ->schema([
                     Grid::make()
                         ->schema([
-                            TextInput::make('detailuser')
-                                ->label(__('Detail User:'))
-                                ->required(fn ($get) => $get('subcategory') === 'networkaccessright')
-                                ->maxLength(255)
-                                ->required(),
-
                             TextInput::make('department')
                                 ->label(__('Department (With Floor):'))
                                 ->required(fn ($get) => $get('subcategory') === 'networkaccessright')
@@ -136,7 +131,7 @@ class TicketsDialog extends Component implements HasForms
                                 ->required(),
 
                             TextInput::make('requestforaccess')
-                                ->label(__('Request for Access? (Social Media, Streaming Services & etc):'))
+                                ->label(__('Reason? (Social Media, Streaming Services & etc):'))
                                 ->required(fn ($get) => $get('subcategory') === 'networkaccessright')
                                 ->maxLength(255)
                                 ->required(),
@@ -290,10 +285,9 @@ class TicketsDialog extends Component implements HasForms
         $data = $this->form->getState();
         $content = "";
         if($data['subcategory'] == 'networkaccessright'){
-            $detailuser = $data['detailuser'] ?? null;
             $department = $data['department' ?? null];
             $requestforaccess = $data['requestforaccess' ?? null];
-            $content = "Detail User: $detailuser<br>Department (With Floor): $department<br>Request for Access? (Social Media, Streaming Services & etc): $requestforaccess";
+            $content = "<u>Detail User</u><br>Department (With Floor): $department<br>Request for Access? (Social Media, Streaming Services & etc): $requestforaccess";
         }
         if($data['subcategory'] == 'createaccount'){
             $name = $data['name'] ?? null;
@@ -342,7 +336,7 @@ class TicketsDialog extends Component implements HasForms
                 'title' => $data['title'],
                 'content' => $content,
                 'owner_id' => auth()->user()->id,
-                'priority' => $data['priority'],
+                'priority' => $data['priority'] ?? null,
                 'category' => $data['category'],
                 'subcategory' => $data['subcategory'],
                 'issue' => $this->issueValue,

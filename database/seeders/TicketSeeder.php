@@ -45,7 +45,7 @@ class TicketSeeder extends Seeder
         $priority = ['low', 'medium', 'high', 'critical'];
         $type = ['incident', 'servicerequest', 'changerequest'];
         $owner_id = [4,5,6,7,8];
-        $responsible_id = [2,3];
+        $responsible_id = [3,4];
         $number_strings = [];
 
         // Define the start and end dates

@@ -4,6 +4,7 @@ namespace App\Http\Livewire\TicketDetails;
 
 use App\Jobs\TicketUpdatedJob;
 use App\Models\Ticket;
+use App\Models\TicketCategory;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -19,11 +20,23 @@ class Subcategory extends Component implements HasForms
     public Ticket $ticket;
     public bool $updating = false;
 
+    protected $listeners = ['refreshForm'];
+
     public function mount(): void
     {
         $this->form->fill([
             'subcategory' => $this->ticket->subcategory
         ]);
+        
+    }
+
+    public function refreshForm(): void
+    {
+        $this->ticket = $this->ticket->refresh();
+        $this->form->fill([
+            'subcategory' => $this->ticket->subcategory
+        ]);
+        $this->updating = false;
     }
 
     public function render()
@@ -45,11 +58,7 @@ class Subcategory extends Component implements HasForms
                 ->searchable()
                 ->disableLabel()
                 ->placeholder(__('Subcategory'))
-                ->options(function($state){
-                    $subcategories = subcategories_list();
-                    unset($subcategories[$state]);
-                    return $subcategories;
-                })
+                ->options(fn ($get): array => TicketCategory::getSubCategories($this->ticket->category))
         ];
     }
 
@@ -73,6 +82,8 @@ class Subcategory extends Component implements HasForms
         $data = $this->form->getState();
         $before = $this->ticket->subcategory ?? '-';
         $this->ticket->subcategory = $data['subcategory'];
+        $this->ticket->issue = 'Select new issue';
+        $this->ticket->type = 'Select new type';
         $this->ticket->save();
         Notification::make()
             ->success()
@@ -84,6 +95,7 @@ class Subcategory extends Component implements HasForms
         ]);
         $this->updating = false;
         $this->emit('ticketSaved');
+        $this->emit('refreshForm');  // Emit event to refresh ticket details form
         TicketUpdatedJob::dispatch(
             $this->ticket,
             __('Subcategory'),

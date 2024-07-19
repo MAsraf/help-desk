@@ -28,6 +28,9 @@ class RedirectIfAuthenticated
                     case 'administrator':
                         return redirect('/analytics');
                         break;
+                    case 'Head of Department':
+                        return redirect('/tickets');
+                        break;   
                     case 'technician':
                         return redirect('/tickets');
                         break;

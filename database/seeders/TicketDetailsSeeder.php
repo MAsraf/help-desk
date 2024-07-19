@@ -127,6 +127,30 @@ class TicketDetailsSeeder extends Seeder
             )
         );
 
+        DB::table('ticket_statuses')->insert(
+            array(
+                'title' => 'Approved',
+                'text_color' => '#ffffff',
+                'bg_color' => '#1589D1',
+                'default' => 0,
+                'slug' => 'approved',
+                'created_at' => new \DateTime,
+                'updated_at' => new \DateTime,
+            )
+        );
+
+        DB::table('ticket_statuses')->insert(
+            array(
+                'title' => 'Disapproved',
+                'text_color' => '#ffffff',
+                'bg_color' => '#E86A22',
+                'default' => 0,
+                'slug' => 'disapproved',
+                'created_at' => new \DateTime,
+                'updated_at' => new \DateTime,
+            )
+        );
+
         //Ticket types
         DB::table('ticket_types')->insert(
             array(
@@ -724,7 +748,6 @@ class TicketDetailsSeeder extends Seeder
                 'updated_at' => new \DateTime,
             )
         );
-
 
         DB::table('notices')->insert(
             array(

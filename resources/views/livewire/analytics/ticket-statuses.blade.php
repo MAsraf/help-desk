@@ -5,12 +5,16 @@
                 <span class="text-lg text-gray-500 font-medium w-full text-left">
                     @lang('Tickets by statuses')
                 </span>
+                {{-- Month Picker --}}
+                <div class="w-full mb-4">
+                    <input type="month" wire:model="selectedMonth" class="form-input mt-1 block w-full"/>
+                </div>
                 {{-- Chart --}}
-                <div class="overflow-x-auto relative sm:rounded-lg w-full">
-                    <canvas id="ticketsByStatuses" style="height: 97px;"></canvas>
+                <div class="overflow-x-auto relative sm:rounded-lg w-full" style="width: 500px; max-width: 100%;">
+                    <canvas id="ticketsByStatuses" style="height: 50px;"></canvas>
                 </div>
                 {{-- Table for chart --}}
-                <div class="w-full overflow-x-auto relative sm:rounded-lg">
+                <div class=" w-full overflow-x-auto relative sm:rounded-lg">
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <caption class="hidden">@lang('Tickets by statuses')</caption>
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -53,7 +57,7 @@
         document.addEventListener('livewire:load', function () {
         let statusChart = null;
 
-        function renderChartStatus(ticketsByStatuses) {
+        function renderChartStatus(ticketsByStatuses, statusColors) {
             const ctxStatus = document.getElementById('ticketsByStatuses').getContext('2d');
             if (statusChart) {
                 statusChart.destroy();
@@ -61,22 +65,18 @@
 
             const labels = Object.keys(ticketsByStatuses);
             const data = Object.values(ticketsByStatuses);
+            const backgroundColors = labels.map(label => statusColors[label]);
 
             statusChart = new Chart(ctxStatus, {
                 type: 'bar',
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: '@lang('Tickets assignments')',
+                        label: '@lang('Tickets counts')',
                         data: data,
-                        backgroundColor: [
-                            'rgba(240, 82, 82, 0.8)',
-                            'rgba(56, 187, 132, 0.8)',
-                            'rgba(255, 206, 86, 0.8)',
-                            'rgba(75, 192, 192, 0.8)',
-                            'rgba(153, 102, 255, 0.8)',
-                            'rgba(255, 159, 64, 0.8)'
-                        ],
+                        backgroundColor: backgroundColors,
+                        borderColor: backgroundColors,
+                        borderWidth: 1,
                         offset: 10
                     }]
                 },
@@ -109,18 +109,14 @@
         }
 
         // Initial rendering
-        renderChartStatus(@json($ticketsByStatuses));
+        renderChartStatus(@json($ticketsByStatuses), @json($statusColors));
 
         // Re-rendering when Livewire updates
         Livewire.hook('message.processed', (message, component) => {
             if (component.fingerprint.name === 'analytics.ticket-statuses') {
                 const ticketsByStatuses = component.get('ticketsByStatuses') || [];
-                const labels = Object.keys(ticketsByStatuses);
-                const data = Object.values(ticketsByStatuses);
-
-                statusChart.data.labels = labels;
-                statusChart.data.datasets[0].data = data;
-                statusChart.update();
+                const statusColors = component.get('statusColors') || [];
+                renderChartStatus(ticketsByStatuses, statusColors);
             }
         });
     });

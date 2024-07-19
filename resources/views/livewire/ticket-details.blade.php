@@ -26,6 +26,18 @@
                         Close Ticket
                     </button>
                     @endif
+                    @if($ticket->subcategory === 'networkaccessright' && auth()->user()->hasRole('Head of Department'))
+                        <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-8 rounded-full whitespace-nowrap
+                            <?php if($ticket->status == 'approved') { echo 'hidden'; } ?>"
+                            wire:click="approveTicket">
+                            Approves ticket
+                        </button>
+                        <button type="button" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-8 rounded-full whitespace-nowrap
+                            <?php if($ticket->status == 'closed') { echo 'hidden'; } ?>"
+                            wire:click="disapproveTicket">
+                            Disapproves ticket
+                        </button>
+                    @endif
                 </div>
             </div>
         </div>
@@ -67,8 +79,8 @@
         </div>
         <div class="lg:w-1/4 w-full flex flex-col gap-5 lg:order-2 order-1">
             <div class="w-full flex flex-col justify-start items-start gap-2">
-                <span class="text-gray-500 font-normal text-xs">@lang('Type')</span>
-                @livewire('ticket-details.type', ['ticket' => $ticket])
+                <span class="text-gray-500 font-normal text-xs">@lang('Priority')</span>
+                @livewire('ticket-details.priority', ['ticket' => $ticket])
             </div>
             <div class="w-full flex flex-col justify-start items-start gap-2">
                 <span class="text-gray-500 font-normal text-xs">@lang('Category')</span>
@@ -83,8 +95,8 @@
                 @livewire('ticket-details.issue', ['ticket' => $ticket])
             </div>
             <div class="w-full flex flex-col justify-start items-start gap-2">
-                <span class="text-gray-500 font-normal text-xs">@lang('Priority')</span>
-                @livewire('ticket-details.priority', ['ticket' => $ticket])
+                <span class="text-gray-500 font-normal text-xs">@lang('Type')</span>
+                @livewire('ticket-details.type', ['ticket' => $ticket])
             </div>
             <div class="w-full flex flex-col justify-start items-start gap-2">
                 <span class="text-gray-500 font-normal text-xs">@lang('Status')</span>

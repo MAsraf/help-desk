@@ -10,7 +10,7 @@
                 <label for="end-date-assignment">End Date:</label>
                 <input type="date" id="end-date-assignment" wire:model.lazy="endDateAssignment">
             </div>
-            <div class="overflow-x-auto relative sm:rounded-lg" style="width: 3 00px; max-width: 100%;">
+            <div class="overflow-x-auto relative sm:rounded-lg" style="width: 300px; max-width: 100%;">
                 <canvas id="assignmentChart"></canvas>
             </div>
             <div class="w-full overflow-x-auto relative sm:rounded-lg">

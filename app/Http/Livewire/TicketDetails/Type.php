@@ -19,19 +19,32 @@ class Type extends Component implements HasForms
     public Ticket $ticket;
     public bool $updating = false;
 
+    protected $listeners = ['refreshForm'];
+
     public function mount(): void
     {
-        $issue = $this->ticket->issue;
-        $subcategory = $this->ticket->subcategory;
-        if($issue || $subcategory){
-            $type = TicketType::where('slug',TicketCategory::where('slug',$issue ?? $subcategory)->pluck('type')->first())->get();
-        }
-        
-        
-        
         $this->form->fill([
-            'type' => $type
+            'type' => $this->ticket->type
         ]);
+    }
+
+    public function refreshForm(): void
+    {
+        $issue = $this->ticket->issue;
+        $this->ticket = $this->ticket->refresh();
+        $this->form->fill([
+            'type' => $this->ticket->type
+        ]);
+        if($issue != "Select new issue"){
+            $type = TicketCategory::where('slug',$issue)->pluck('type')->first();
+            $this->ticket->type = $type;
+            $this->ticket->save();
+            $this->ticket = $this->ticket->refresh();
+            $this->form->fill([
+                'type' => $type
+            ]);
+        }
+        $this->updating = false;
     }
 
     public function render()
@@ -55,7 +68,6 @@ class Type extends Component implements HasForms
                 ->searchable()
                 ->options(function($state){
                     $types = types_list();
-                    unset($types[$state]);
                     return $types;
                 }),
         ];

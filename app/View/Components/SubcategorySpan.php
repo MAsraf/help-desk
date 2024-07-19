@@ -17,6 +17,9 @@ class SubcategorySpan extends Component
     public function __construct($subcategory)
     {
         $this->subcategory = TicketCategory::where('slug', $subcategory)->first();
+        if($subcategory == "Select new subcategory"){
+            $this->subcategory = "Select new subcategory";
+        }
     }
 
     /**
