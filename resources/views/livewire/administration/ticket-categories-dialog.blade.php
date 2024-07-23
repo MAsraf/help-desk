@@ -7,12 +7,12 @@
         <button type="submit" wire:loading.attr="disabled"
                 class="rounded-lg flex flex-row justify-center items-center text-center gap-2 text-white bg-primary-700
                 bg-opacity-90 hover:bg-opacity-100 shadow hover:shadow-lg px-10 py-3 text-sm mt-5">
-            @lang($category->id ? 'Update' : 'Create')
+            @lang($category?->id ? 'Update' : 'Create')
             <div wire:loading>
                 <em class="fa fa-spin fa-spinner"></em>
             </div>
         </button>
-        @if($category->id)
+        @if($category?->id)
             <button type="button" wire:loading.attr="disabled"
                     {!! $deleteConfirmationOpened ? 'disabled' : '' !!} wire:click="deleteCategory"
                     class="rounded-lg flex flex-row justify-center items-center text-center text-white bg-red-700

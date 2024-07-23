@@ -155,7 +155,10 @@ class TicketCategoriesDialog extends Component implements HasForms
     {
         $this->category->delete();
         $this->deleteConfirmationOpened = false;
-        $this->emit('categoryDeleted');
+        
+        $this->dispatchBrowserEvent('toggleCategoryModal');
+        redirect()->to('/administration/ticket-categories');
+        
         Notification::make()
             ->success()
             ->title(__('Category deleted'))

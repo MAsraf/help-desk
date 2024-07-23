@@ -27,12 +27,12 @@
                     </button>
                     @endif
                     @if($ticket->subcategory === 'networkaccessright' && auth()->user()->hasRole('Head of Department'))
-                        <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-8 rounded-full whitespace-nowrap
+                        <button type="button" class="transition ease-in-out delay-100 bg-blue-500 hover:-translate-y-1 hover:scale-110 duration-300 bg-blue-500 hover:bg-blue-700 text-white font-bold px-1 rounded-full whitespace-nowrap
                             <?php if($ticket->status == 'approved') { echo 'hidden'; } ?>"
                             wire:click="approveTicket">
                             Approves ticket
                         </button>
-                        <button type="button" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-8 rounded-full whitespace-nowrap
+                        <button type="button" class="transition ease-in-out delay-100 hover:-translate-y-1 hover:scale-110 duration-300 bg-red-500 hover:bg-red-700 text-white font-bold px-1 rounded-full whitespace-nowrap
                             <?php if($ticket->status == 'closed') { echo 'hidden'; } ?>"
                             wire:click="disapproveTicket">
                             Disapproves ticket

@@ -47,7 +47,7 @@ class Tickets extends Component implements HasForms
                 'Assigned to me',
                 'Created by me',
             ];
-        }else if(auth()->user()->hasRole('user')){
+        }else if(auth()->user()->hasRole('user') || auth()->user()->hasRole('Human Resources')){
             $this->menu = [
                 'Created by me',
             ];

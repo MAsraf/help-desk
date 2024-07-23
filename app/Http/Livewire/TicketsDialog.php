@@ -82,14 +82,27 @@ class TicketsDialog extends Component implements HasForms
                         ->required()
                         ->searchable()
                         ->reactive()
-                        ->options(fn ($get): array => TicketCategory::getSubCategories($get('category')))
+                        ->options(function ($get): array {
+                            // Get all subcategories for the selected category
+                            $subcategories = TicketCategory::getSubCategories($get('category'));
+                            // Filter subcategories based on the user's role
+                            if (!auth()->user()->hasRole('Human Resources')) {
+                                // Remove 'createaccount' and 'userlocation' for non-HR users
+                                $subcategories = array_filter($subcategories, function ($subcategory) {
+                                    return !in_array($subcategory, ['createaccount', 'userlocation']);
+                                },ARRAY_FILTER_USE_KEY);
+                            }
+                    
+                            return $subcategories;
+                        })
                         ->afterStateUpdated(function (callable $set, $get, $state) { //state gives slug 
                             if($get('subcategory') != null){
-                            $set('category', TicketCategory::getChosenCategory($state));
+                                $set('category', TicketCategory::getChosenCategory($state));
                             }
                             $set('issue', null);
-                            if($state == ('networkaccessright' || 'createaccount' || 'userlocation'))
-                            $this->setIssueValue($state);
+                            if($state == ('networkaccessright' || 'createaccount' || 'userlocation')){
+                                $this->setIssueValue($state);
+                            }
                     }), // Set category when categories changes
                     Select::make('issue')
                         ->label(__('Issue'))
@@ -287,7 +300,7 @@ class TicketsDialog extends Component implements HasForms
         if($data['subcategory'] == 'networkaccessright'){
             $department = $data['department' ?? null];
             $requestforaccess = $data['requestforaccess' ?? null];
-            $content = "<u>Detail User</u><br>Department (With Floor): $department<br>Request for Access? (Social Media, Streaming Services & etc): $requestforaccess";
+            $content = "<u>Detail User</u><br><b>Department (With Floor):</b> $department<br><b>Request for Access? (Social Media, Streaming Services & etc):</b> $requestforaccess";
         }
         if($data['subcategory'] == 'createaccount'){
             $name = $data['name'] ?? null;
@@ -296,7 +309,7 @@ class TicketsDialog extends Component implements HasForms
             $position = $data['position' ?? null];
             $department = $data['department' ?? null];
             $pcinstallationlocation = $data['pcinstallationlocation' ?? null];
-            $content = "Name: $name<br>Staff ID: $staffid<br>MyKad: $mykad<br>Position / Gred: $position<br>Department: $department<br>PC Installation Location (With Department & Floor): $pcinstallationlocation";
+            $content = "<b>Name:</b> $name<br><b>Staff ID:</b> $staffid<br><b>MyKad:</b> $mykad<br><b>Position / Gred:</b> $position<br><b>Department:</b> $department<br><b>PC Installation Location (With Department & Floor):</b> $pcinstallationlocation";
         }
         if($data['subcategory'] == 'userlocation'){
             $content .= "Previous User & Location Details<br>";
@@ -305,17 +318,17 @@ class TicketsDialog extends Component implements HasForms
             $previousmykad = $data['previousmykad' ?? null];
             $previousposition = $data['previousposition' ?? null];
             $previousdepartment = $data['previousdepartment' ?? null];
-            $content = "Name: $previousname<br>Staff ID: $previousstaffid<br>MyKad: $previousmykad<br>Position / Gred: $previousposition<br>Department & Floor: $previousdepartment<br>";
+            $content = "<b>Name:</b> $previousname<br><b>Staff ID:</b> $previousstaffid<br><b>MyKad:</b> $previousmykad<br><b>Position / Gred:</b> $previousposition<br><b>Department & Floor:</b> $previousdepartment<br>";
         
             $content .= "Current User Details<br>";
             $currentstaffid = $data['currentstaffid'] ?? null;
             $currentposition = $data['currentposition' ?? null];
             $currentdepartment = $data['currentdepartment' ?? null];
-            $content = "Staff ID: $currentstaffid<br>Position / Gred: $currentposition<br>Department & Floor: $currentdepartment<br>";
+            $content = "<b>Staff ID:</b> $currentstaffid<br><b>Position / Gred:</b> $currentposition<br><b>Department & Floor:</b> $currentdepartment<br>";
         
             $content .= "New Location Details (Computer Installation)<br>";
             $installationlocation = $data['installationlocation' ?? null];
-            $content .= "Installation Location (with Department & Floor): $installationlocation";
+            $content .= "<b>Installation Location (with Department & Floor):</b> $installationlocation";
 
         }
         $content .= $data['content'];

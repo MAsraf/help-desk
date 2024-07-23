@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use PhpOffice\PhpSpreadsheet\Calculation\Category;
 
@@ -47,10 +48,6 @@ class TicketCategory extends Model
             ->select('parent_id', 'title');
     }
 
-    public function type()
-    {
-        return $this->belongsTo(TicketType::class, 'type', 'slug');
-    }
 
     public static function getSubCategories($slug)
     {

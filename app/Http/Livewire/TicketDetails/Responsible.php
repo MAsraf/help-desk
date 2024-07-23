@@ -43,7 +43,7 @@ class Responsible extends Component implements HasForms
                 ->label(__('Responsible'))
                 ->disableLabel()
                 ->placeholder(__('Responsible'))
-                ->options(User::all()->pluck('name', 'id')->toArray())
+                ->options(User::role('technician')->pluck('name', 'id')->toArray())
                 ->required()
         ];
     }

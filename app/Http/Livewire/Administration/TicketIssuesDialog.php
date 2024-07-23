@@ -126,7 +126,8 @@ class TicketIssuesDialog extends Component implements HasForms
     {
         $this->issue->delete();
         $this->deleteConfirmationOpened = false;
-        $this->emit('issueDeleted');
+        $this->dispatchBrowserEvent('toggleIssueModal');
+        redirect()->to('/administration/ticket-issues');
         Notification::make()
             ->success()
             ->title(__('Issue deleted'))

@@ -66,18 +66,18 @@ class TicketCategories extends Component implements HasTable
                     </span>
                 ')),
     
-            TextColumn::make('parent_id')
-                ->label(__('Subcategories'))
-                ->searchable()
-                ->sortable()
-                ->formatStateUsing(fn(TicketCategory $record) => new HtmlString('
-                    <span
-                        class="px-2 py-1 rounded-full text-sm flex items-center gap-2"
-                        style="color: ' . $record->text_color . '; background-color: ' . $record->bg_color . '"
-                    >
-                    ' . $record->where('parent_id',$record->id)->pluck('title')->implode(', ') . '
-                    </span>
-                ')),
+            // TextColumn::make('parent_id')
+            //     ->label(__('Subcategories'))
+            //     ->searchable()
+            //     ->sortable()
+            //     ->formatStateUsing(fn(TicketCategory $record) => new HtmlString('
+            //         <span
+            //             class="px-2 py-1 rounded-full text-sm flex items-center gap-2"
+            //             style="color: ' . $record->text_color . '; background-color: ' . $record->bg_color . '"
+            //         >
+            //         ' . $record->where('parent_id',$record->id)->pluck('title')->implode(', ') . '
+            //         </span>
+            //     ')),
 
             TextColumn::make('created_at')
                 ->label(__('Created at'))
@@ -201,6 +201,7 @@ class TicketCategories extends Component implements HasTable
      */
     public function categoryDeleted()
     {
-        $this->categorySaved();
+        $this->selectedCategory->delete();
+        
     }
 }

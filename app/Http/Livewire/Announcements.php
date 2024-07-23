@@ -33,7 +33,14 @@ class Announcements extends Component implements HasTable
      */
     protected function getTableQuery(): Builder|Relation
     {
-        return Notice::query();
+        $query = Notice::query();
+
+        if (auth()->check() && !auth()->user()->can('Manage notice banners')) {
+            // Filter for regular users to see only enabled notices
+            $query->where('status', true);
+        }
+
+        return $query;
     }
 
     /**

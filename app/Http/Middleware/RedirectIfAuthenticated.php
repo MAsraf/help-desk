@@ -34,6 +34,9 @@ class RedirectIfAuthenticated
                     case 'technician':
                         return redirect('/tickets');
                         break;
+                    case 'Human Resources':
+                        return redirect('/tickets');
+                        break;    
                     case 'user':
                         return redirect('/tickets');
                         break;

@@ -115,6 +115,16 @@ class PermissionsSeeder extends Seeder
             'Can view Tickets page'
         ]);
 
+        Role::create(["name" => "Human Resources"])
+        ->givePermissionTo([
+            'View own tickets',
+            'Create tickets',
+            'Update own tickets',
+            'Delete own tickets',
+            'Can view Tickets page',
+            'Can view Announcement page',
+        ]);
+
         Role::create(["name" => "user"])
         ->givePermissionTo([
             'View own tickets',
@@ -131,7 +141,7 @@ class PermissionsSeeder extends Seeder
         User::find(2)->assignRole('Head of Department');
         User::find(3)->assignRole('technician');
         User::find(4)->assignRole('technician');
-        User::find(5)->assignRole('user');
+        User::find(5)->assignRole('Human Resources');
         User::find(6)->assignRole('user');
         User::find(7)->assignRole('user');
         User::find(8)->assignRole('user');
