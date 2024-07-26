@@ -100,7 +100,7 @@ class TicketsDialog extends Component implements HasForms
                                 $set('category', TicketCategory::getChosenCategory($state));
                             }
                             $set('issue', null);
-                            if($state == ('networkaccessright' || 'createaccount' || 'userlocation')){
+                            if($state == ('networkaccessright' || 'createaccount' || 'userlocation')){  //add subcategories with extra fields here 
                                 $this->setIssueValue($state);
                             }
                     }), // Set category when categories changes
@@ -108,11 +108,11 @@ class TicketsDialog extends Component implements HasForms
                         ->label(__('Issue'))
                         ->required(function ($get): bool { 
                             $subcategory = $get('subcategory');
-                            return !in_array($subcategory, ['networkaccessright', 'createaccount','userlocation']);
+                            return !in_array($subcategory, ['networkaccessright', 'createaccount','userlocation']); //add subcategories with extra fields here
                         })
                         ->hidden(function ($get): bool { 
                             $subcategory = $get('subcategory');
-                            return in_array($subcategory, ['networkaccessright', 'createaccount','userlocation']);
+                            return in_array($subcategory, ['networkaccessright', 'createaccount','userlocation']);  //add subcategories with extra fields here
                         })
                         ->searchable()
                         ->reactive()
@@ -197,7 +197,6 @@ class TicketsDialog extends Component implements HasForms
                 ->collapsible()
                 ->visible((fn ($get) => $get('subcategory') === 'createaccount')),
 
-
             Section::make('Previous User & Location Details')
                 ->schema([
                     Grid::make()
@@ -235,6 +234,7 @@ class TicketsDialog extends Component implements HasForms
                 ])
                 ->collapsible()
                 ->visible((fn ($get) => $get('subcategory') === 'userlocation')),
+
             Section::make('Current User Details')
                 ->schema([
                     Grid::make()
@@ -331,6 +331,7 @@ class TicketsDialog extends Component implements HasForms
             $content .= "<b>Installation Location (with Department & Floor):</b> $installationlocation";
 
         }
+        //add another conditioning for the newly created subcategories here
         $content .= $data['content'];
         if($this->issueValue == null){
         $ticket = Ticket::create([

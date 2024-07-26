@@ -91,14 +91,14 @@ return [
             'show_notification_indicator' => false,
             'permissions' => ['Can view Tickets page']
         ],
-        [
-            'title' => 'Kanban Board',
-            'route' => 'kanban',
-            'icon' => 'fa-clipboard-check',
-            'always_shown' => false,
-            'show_notification_indicator' => false,
-            'permissions' => ['Can view Kanban page']
-        ],
+        // [
+        //     'title' => 'Kanban Board',
+        //     'route' => 'kanban',
+        //     'icon' => 'fa-clipboard-check',
+        //     'always_shown' => false,
+        //     'show_notification_indicator' => false,
+        //     'permissions' => ['Can view Kanban page']
+        // ],
         [
             'title' => 'Administration',
             'route' => 'administration',
@@ -135,6 +135,13 @@ return [
                     'permissions' => ['Manage ticket statuses']
                 ],
                 [
+                    'title' => 'Manage priorities',
+                    'route' => 'administration.ticket-priorities',
+                    'icon' => 'fa-arrow-up',
+                    'always_shown' => false,
+                    'permissions' => ['Manage ticket priorities']
+                ],
+                [
                     'title' => 'Manage types',
                     'route' => 'administration.ticket-types',
                     'icon' => 'fa-copy',
@@ -161,13 +168,6 @@ return [
                     'icon' => 'fa-copy',
                     'always_shown' => false,
                     'permissions' => ['Manage ticket categories']
-                ],
-                [
-                    'title' => 'Manage priorities',
-                    'route' => 'administration.ticket-priorities',
-                    'icon' => 'fa-arrow-up',
-                    'always_shown' => false,
-                    'permissions' => ['Manage ticket priorities']
                 ],
                 [
                     'title' => 'Activity logs',

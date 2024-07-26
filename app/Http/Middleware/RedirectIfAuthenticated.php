@@ -40,6 +40,7 @@ class RedirectIfAuthenticated
                     case 'user':
                         return redirect('/tickets');
                         break;
+                    //Add redirect for new roles here
                 }
             }
         }

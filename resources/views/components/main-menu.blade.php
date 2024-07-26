@@ -1,5 +1,5 @@
 <nav
-    class="bg-white px-2 sm:px-4 py-2.5 dark:bg-gray-900 fixed w-full z-20 top-0
+    class="bg-white px-2 sm:px-4 dark:bg-gray-900 fixed w-full z-20 top-0
     left-0 border-b border-gray-200 dark:border-gray-600"
 >
     <div class="flex flex-wrap justify-start items-center w-full gap-8 xl:px-32 lg:px-22 md:px-18 px-14">
@@ -25,47 +25,22 @@
                     </path>
                 </svg>
             </button>
-            <button type="button"
-                    class="flex mr-3 text-sm bg-gray-800 rounded-full xl:mr-0 focus:ring-4
-                    focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button"
-                    aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom"
-            >
-                <span class="sr-only">Open user menu</span>
-                <x-user-avatar :user="auth()->user()" />
-            </button>
-            <div
-                class="hidden z-50 my-4 text-base list-none bg-white rounded divide-y divide-gray-100
-                shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown"
-            >
-                <div class="py-3 px-4">
-                    <span class="block text-sm text-gray-900 dark:text-white">{{ auth()->user()->name }}</span>
-                    <span
+            <div class="py-3 px-4">
+            <span class="block text-sm text-gray-900 dark:text-white">{{ auth()->user()->name }}</span>
+            <span
                         class="block text-sm font-medium text-gray-500
                         truncate dark:text-gray-400">
                         {{ auth()->user()->email }}
                     </span>
-                </div>
-                <ul class="py-1" aria-labelledby="user-menu-button">
-                    <li>
-                        <a
-                            href="{{ route('my-profile') }}"
-                            class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600
-                            dark:text-gray-200 dark:hover:text-white"
-                        >
-                            @lang('My profile')
-                        </a>
-                    </li>
-                    <li>
-                        <a
+                    <a
                             href="{{ route('auth.logout') }}"
-                            class="block py-2 px-4 text-sm text-red-700 hover:bg-gray-100 dark:hover:bg-gray-600
+                            class="block text-sm text-red-700 hover:bg-gray-100 dark:hover:bg-gray-600
                             dark:text-red-200 dark:hover:text-red-50"
                         >
                             @lang('Sign out')
                         </a>
-                    </li>
-                </ul>
             </div>
+            
         </div>
         <div class="hidden justify-between items-center w-full xl:flex xl:w-auto xl:order-1" id="navbar-sticky">
             <ul

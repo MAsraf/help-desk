@@ -1,22 +1,22 @@
 <div>                    
-    <div class="w-2/3 p-5">
+    <div class="w-full p-5">
         <div class="w-2/3 flex flex-col gap-5 p-5 rounded-lg border border-gray-100 shadow-lg bg-white">
             <span class="text-lg text-gray-500 font-medium">@lang('My assigned tickets')</span>
-            <div class="overflow-x-auto relative sm:rounded-lg">
+            <div class="overflow-x-auto relative sm:rounded-lg min-w-[640px]">
                 <table id="assignedTable" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <caption class="hidden">@lang('My assigned tickets')</caption>
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th scope="col" class="py-3 px-1">
+                            <th scope="col" class="py-3 px-1 w-50">
                                 @lang('No.')
                             </th>
-                            <th scope="col" class="py-3 px-6">
+                            <th scope="col" class="py-3 px-6 w-1/2">
                                 @lang('Title')
                             </th>
-                            <th scope="col" class="py-3 px-1">
+                            <th scope="col" class="py-3 px-1 w-24">
                                 @lang('Priority')
                             </th>
-                            <th scope="col" class="py-3 px-1">
+                            <th scope="col" class="py-3 px-1 w-1/4">
                                 @lang('Issue')
                             </th>
                             

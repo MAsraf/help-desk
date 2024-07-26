@@ -16,7 +16,7 @@ class PrioritySpan extends Component
      */
     public function __construct($priority)
     {
-        $this->priority = TicketPriority::where('slug', $priority)->first();
+        $this->priority = TicketPriority::withTrashed()->where('slug', $priority)->first();
     }
 
     /**

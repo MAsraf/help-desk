@@ -115,6 +115,16 @@
                 'user' => $comment->owner->where('id',$notification->data['comment']['owner_id'])->pluck('name')->first(),
                 'ticket' => $notification->data['ticket']['title']
             ])</span>
+            <div class="w-full flex flex-row justify-start items-center gap-2">
+                            <div class="flex flex-row justify-start items-center gap-1">
+                                <span class="text-xs text-gray-500 font-medium">
+                                    @lang('Comment:')
+                                </span>
+                                <span class="text-xs text-gray-500">
+                                    <?php echo $notification->data['comment']['content']; ?>
+                                </span>
+                            </div>
+                        </div>
             <a href="{{ route(
                     'tickets.details',
                     [

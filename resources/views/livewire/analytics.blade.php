@@ -2,7 +2,7 @@
 <div style="display: flex; flex-direction: row;" x-data="{activeTab: '{{ $notAssignedTickets->count() ? 'content1' : 'content2' }}'}">
                 <div id="sidebar" style="left: 0px; top: 80px; margin: 0; padding: 0; width: 200px; background-color: #f1f1f1; position: fixed; height: 100%; overflow: auto;">
                     <a style="display: block; color: black; padding: 16px; text-decoration: none;">
-                        <button @click="activeTab = 'content1'">Not assigned tickets</button>
+                        <button @click="activeTab = 'content1'">Unassigned tickets</button>
                     </a>
                     <a style="display: block; color: black; padding: 16px; text-decoration: none;">
                         <button @click="activeTab = 'content2'">My assigned tickets</button>
@@ -20,7 +20,7 @@
                 <div class="w-full flex flex-row flex-wrap ml-200" >
                     <div class="lg:w-full h-full flex flex-col">
                         
-                        <div style="width: 250%; height: 100%;">
+                        <div class="min-w-[2040px]" style="width: 250%;">
                             <!-- Content for Not assigned tickets -->
                             <div x-show="activeTab === 'content1'" id="content1" x-cloak style="flex: 1;">
                                 @livewire('analytics.no-assigned-tickets')

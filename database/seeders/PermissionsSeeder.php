@@ -141,11 +141,12 @@ class PermissionsSeeder extends Seeder
         User::find(2)->assignRole('Head of Department');
         User::find(3)->assignRole('technician');
         User::find(4)->assignRole('technician');
-        User::find(5)->assignRole('Human Resources');
-        User::find(6)->assignRole('user');
+        User::find(5)->assignRole('technician');
+        User::find(6)->assignRole('Human Resources');
         User::find(7)->assignRole('user');
         User::find(8)->assignRole('user');
         User::find(9)->assignRole('user');
+        User::find(10)->assignRole('user');
 
     }
 }

@@ -10,44 +10,48 @@
                 <label for="end-date-assignment">End Date:</label>
                 <input type="date" id="end-date-assignment" wire:model.lazy="endDateAssignment">
             </div>
-            <div class="overflow-x-auto relative sm:rounded-lg" style="width: 300px; max-width: 100%;">
-                <canvas id="assignmentChart"></canvas>
-            </div>
-            <div class="w-full overflow-x-auto relative sm:rounded-lg">
-                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                    <caption class="hidden">@lang('Tickets assignments')</caption>
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                            <th scope="col" class="py-3 px-6">
-                                @lang('Responsible')
-                            </th>
-                            <th scope="col" class="py-3 px-6">
-                                @lang('Assigned tickets')
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if(sizeof($ticketsAssignments))
-                        @foreach($ticketsAssignments as $responsible => $count)
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <td class="py-4 px-6">
-                                {{ $responsible }}
-                            </td>
-                            <td class="py-4 px-6">
-                                {{ $count }}
-                            </td>
-                        </tr>
-                        @endforeach
-                        @else
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <td colspan="2" class="py-4 px-6 text-center dark:text-white">
-                                @lang('No tickets assigned!')
-                            </td>
-                        </tr>
-                        @endif
-                    </tbody>
-                </table>
-            </div>
+            {{-- Chart and Table Container --}}
+            <div class="w-full flex flex-row gap-5">
+            {{-- Chart --}}
+                <div class="overflow-x-auto relative sm:rounded-lg" style="width: 938px; max-width: 100%;">
+                    <canvas id="assignmentChart"></canvas>
+                </div>
+                <div class="w-full overflow-x-auto relative sm:rounded-lg">
+                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <caption class="hidden">@lang('Tickets assignments')</caption>
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="py-3 px-6">
+                                    @lang('Responsible')
+                                </th>
+                                <th scope="col" class="py-3 px-6">
+                                    @lang('Assigned tickets')
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if(sizeof($ticketsAssignments))
+                            @foreach($ticketsAssignments as $responsible => $count)
+                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <td class="py-4 px-6">
+                                    {{ $responsible }}
+                                </td>
+                                <td class="py-4 px-6">
+                                    {{ $count }}
+                                </td>
+                            </tr>
+                            @endforeach
+                            @else
+                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <td colspan="2" class="py-4 px-6 text-center dark:text-white">
+                                    @lang('No tickets assigned!')
+                                </td>
+                            </tr>
+                            @endif
+                        </tbody>
+                    </table>
+                </div>
+            </div>   
         </div>
     </div>
     @push('scripts')
@@ -108,7 +112,8 @@
             options: {
                 scales: {
                     y: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        display: false,
                     }
                 }
             }

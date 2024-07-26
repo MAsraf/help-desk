@@ -9,9 +9,11 @@
                 <div class="w-full mb-4">
                     <input type="month" wire:model="selectedMonth" class="form-input mt-1 block w-full"/>
                 </div>
+                {{-- Chart and Table Container --}}
+                <div class="w-full flex flex-row gap-5">
                 {{-- Chart --}}
-                <div class="overflow-x-auto relative sm:rounded-lg w-full" style="width: 500px; max-width: 100%;">
-                    <canvas id="ticketsByStatuses" style="height: 50px;"></canvas>
+                <div class="overflow-x-auto relative sm:rounded-lg w-full" style="width: 1000px; max-width: 100%;">
+                    <canvas id="ticketsByStatuses" style="height: 200px;"></canvas>
                 </div>
                 {{-- Table for chart --}}
                 <div class=" w-full overflow-x-auto relative sm:rounded-lg">
@@ -52,13 +54,15 @@
                     </table>
                 </div>
             </div>
+            </div>
         </div>
     <script>
-        document.addEventListener('livewire:load', function () {
+    document.addEventListener('livewire:load', function () {
         let statusChart = null;
 
         function renderChartStatus(ticketsByStatuses, statusColors) {
             const ctxStatus = document.getElementById('ticketsByStatuses').getContext('2d');
+            // Destroy the existing chart instance if it exists
             if (statusChart) {
                 statusChart.destroy();
             }
@@ -67,6 +71,7 @@
             const data = Object.values(ticketsByStatuses);
             const backgroundColors = labels.map(label => statusColors[label]);
 
+            // Create a new Chart instance
             statusChart = new Chart(ctxStatus, {
                 type: 'bar',
                 data: {
@@ -81,6 +86,8 @@
                     }]
                 },
                 options: {
+                    maintainAspectRatio: false,
+                    responsive: true,
                     plugins: {
                         legend: {
                             display: false,
@@ -101,6 +108,9 @@
                         y: {
                             grid: {
                                 display: false
+                            },
+                            ticks: {
+                                precision: 0
                             }
                         }
                     }

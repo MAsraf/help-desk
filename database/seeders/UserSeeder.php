@@ -18,9 +18,10 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->insert(
             array(
-                'name' => 'administrator',
-                'email' => 'admin@gmail.com',
+                'name' => 'MOHAMMAD NADZMI BIN MD PADZI',
+                'email' => 'nadzmi@myipo.gov.my',
                 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+                'department_id' => 2,
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -28,9 +29,10 @@ class UserSeeder extends Seeder
 
         DB::table('users')->insert(
             array(
-                'name' => 'Head of Department',
-                'email' => 'hod@gmail.com',
+                'name' => 'NUR SALFIZA BINTI SHAARI',
+                'email' => 'fiza@myipo.gov.my',
                 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+                'department_id' => 2,
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -38,9 +40,10 @@ class UserSeeder extends Seeder
 
         DB::table('users')->insert(
             array(
-                'name' => 'technician',
-                'email' => 'tech@gmail.com',
+                'name' => 'MOHD. HAIRUNIZAM BIN MOHD FAUZI',
+                'email' => 'mohaizam@myipo.gov.my',
                 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+                'department_id' => 2,
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -48,9 +51,10 @@ class UserSeeder extends Seeder
 
         DB::table('users')->insert(
             array(
-                'name' => 'technician 2',
-                'email' => 'tech2@gmail.com',
+                'name' => 'JOHARI BIN MD. NOR',
+                'email' => 'johari@myipo.gov.my',
                 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+                'department_id' => 2,
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -58,9 +62,21 @@ class UserSeeder extends Seeder
 
         DB::table('users')->insert(
             array(
-                'name' => 'Asraf',
-                'email' => 'asraf.educ.it@gmail.com',
+                'name' => 'FAIZUL HAFIZ BIN MOHD. SHAMSUDDIN',
+                'email' => 'faizul@myipo.gov.my',
                 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+                'department_id' => 2,
+                'created_at' => new \DateTime,
+                'updated_at' => new \DateTime,
+            )
+        );
+
+        DB::table('users')->insert(
+            array(
+                'name' => 'MOHAMMAD FAKHARUDDIN BIN MOHAMAD ZIN',
+                'email' => 'fakharuddin@myipo.gov.my',
+                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+                'department_id' => 1,
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -71,6 +87,7 @@ class UserSeeder extends Seeder
                 'name' => 'Syariff Ghani',
                 'email' => 'syariffghani@gmail.com',
                 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+                'department_id' => 1,
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -81,6 +98,7 @@ class UserSeeder extends Seeder
                 'name' => 'Nurul Khaliesah',
                 'email' => 'khaliesah@gmail.com',
                 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+                'department_id' => 1,
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -91,6 +109,7 @@ class UserSeeder extends Seeder
                 'name' => 'Haikal Handali',
                 'email' => 'haikal@gmail.com',
                 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+                'department_id' => 1,
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )
@@ -101,6 +120,7 @@ class UserSeeder extends Seeder
                 'name' => 'Hazmie Khalid',
                 'email' => 'hazmie@gmail.com',
                 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+                'department_id' => 1,
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             )

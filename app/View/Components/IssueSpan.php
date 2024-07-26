@@ -16,7 +16,7 @@ class IssueSpan extends Component
      */
     public function __construct($issue)
     {
-        $this->issue = TicketCategory::where('slug', $issue)->first();
+        $this->issue = TicketCategory::withTrashed()->where('slug', $issue)->first();
         if($issue == "Select new issue"){
             $this->issue = "Select new issue";
         }

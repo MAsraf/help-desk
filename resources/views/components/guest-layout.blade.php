@@ -12,8 +12,7 @@
             style="background-image: url('{{ asset('images/help-desk.png') }}'); background-size: 80%">
         </div>
         <div class="absolute lg:w-1/2 md:w-1/3 lg:flex md:flex hidden bg-sky-500/75 flex-col flex flex-col justify-center items-center text-center">
-        <!-- Filament table component goes here -->
-        <!-- @livewire('announcements') -->
+        
         </div>
         <div
             class="absolute lg:w-1/2 md:w-2/3 xl:p-44 lg:p-32 md:p-24 p-20 flex flex-col justify-center

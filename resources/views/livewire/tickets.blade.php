@@ -86,10 +86,11 @@
             @if($ticket->owner_id == auth()->user()->id || auth()->user()->can('View all tickets'))
             <div class="w-full bg-white border border-gray-200 shadow hover:shadow-lg rounded-lg p-5 flex
                         flex-col justify-start items-start gap-1">
-                <span class="text-xs font-medium text-gray-500 flex flex-row justify-start items-center gap-2">
+                <span class="text-base font-medium text-black-500 flex flex-row justify-start items-center gap-2">
                     <em class="fa fa-tag"></em>
                     <span class="text-xs text-gray-300">/</span>
-                    <button type="button" class="font-normal hover:cursor-pointer hover:underline" wire:click="copyTicketUrl('{{ $ticket->id }}')" title="@lang('Click to copy url to ticket')">{{ $ticket->ticket_number }}</button>
+                    @lang('Ticket Number:   ')
+                    <button type="button" class="text-base font-normal hover:text-gray-500 hover:cursor-pointer hover:underline" wire:click="copyTicketUrl('{{ $ticket->id }}')" title="@lang('Click to copy url to ticket')">{{ $ticket->ticket_number }}</button>
                 </span>
                 <div class="w-full flex flex-row justify-between items-start gap-5">
                     <a href="{{ route(
@@ -123,7 +124,7 @@
                 </div>
                 <div class="w-full flex flex-row justify-start items-center gap-10 mt-5">
                     <div class="flex flex-row justify-start items-center gap-2 text-xs">
-                        <x-user-avatar :user="$ticket->owner" :size="30" />
+                        <x-user-avatar :user="$ticket->owner":size="30" />
                         <div class="flex flex-col gap-0">
                             <span class="font-medium text-gray-500 text-xs">@lang('Owner')</span>
                             <span class="font-light text-gray-500 text-base">{{ $ticket->owner->name }}</span>
@@ -131,7 +132,7 @@
                     </div>
                     @if($ticket->responsible)
                     <div class="flex flex-row justify-start items-center gap-2">
-                        <x-user-avatar :user="$ticket->responsible" :size="30" />
+                        <x-user-avatar :user="$ticket->responsible":size="30" />
                         <div class="flex flex-col gap-0">
                             <span class="font-medium text-gray-500 text-xs">@lang('Responsible')</span>
                             <span class="font-light text-gray-500 text-base">

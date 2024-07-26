@@ -113,6 +113,7 @@ class Login extends Component implements HasForms
                         case 'user':
                             redirect()->to(route('tickets'));
                             break;
+                        //Add redirect for new roles here
                         case null:
                             redirect()->to(route('home'));
                     }

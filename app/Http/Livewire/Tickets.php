@@ -51,6 +51,7 @@ class Tickets extends Component implements HasForms
             $this->menu = [
                 'Created by me',
             ];
+        //Assigns menu for new roles here
         }
         
         $this->activeMenu = $this->menu[0];
@@ -74,6 +75,8 @@ class Tickets extends Component implements HasForms
         }
         if ($this->activeMenu === 'Network Access Right Requests') {
             $query->where('subcategory', 'networkaccessright');
+            //add for different department for HOD
+            //another where query but with user->department
         }
         if ($this->search) {
             $query->where(function ($query) {

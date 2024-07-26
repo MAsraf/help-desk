@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(FontAwesomeFreeSeeder::class);
+        $this->call(DepartmentSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(TicketDetailsSeeder::class);
         $this->call(TicketSeeder::class);

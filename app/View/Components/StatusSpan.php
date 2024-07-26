@@ -16,7 +16,7 @@ class StatusSpan extends Component
      */
     public function __construct($status)
     {
-        $this->status = TicketStatus::where('slug', $status)->first();
+        $this->status = TicketStatus::withTrashed()->where('slug', $status)->first();
     }
 
     /**

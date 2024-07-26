@@ -1,24 +1,13 @@
 <div >
     <div>
-        <label for="start-date">Start Date:</label>
+        <label for="start-date" class="font-bold">Start Date:</label>
         <input type="date" id="start-date" wire:model.lazy="startDate">
-        <label for="end-date">End Date:</label>
+        <label for="end-date" class="font-bold">End Date:</label>
         <input type="date" id="end-date" wire:model.lazy="endDate">
+        <label for="end-date" class="font-bold" style="padding: 10px;">OR</label>
+        <input type="month" wire:model="selectedMonth"/>
     </div>
-        <label id="total-created" data-my-variable="{{ $totalCreated }}">Total Ticket Created: {{$totalCreated}}</label>&emsp;
-        <label id="total-closed" data-my-variable="{{ $totalClosed }}">Total Ticket Closed: {{$totalClosed}}</label>&emsp;
-        <label id="total-pending" data-my-variable="{{ $totalPending }}">Total Ticket Pending: {{$totalPending}}</label>&emsp;
-
-    <div>
-    @foreach(range(1, 12) as $month)
-            <button type="button" wire:click="month({{ $month }})"
-                class="bg-primary-700 text-white hover:bg-primary-800 px-4 py-1 rounded-lg shadow
-                hover:shadow-lg text-base">
-                @lang(DateTime::createFromFormat('!m', $month)->format('F'))
-            </button>
-    @endforeach
-    </div>
-
+    
     <div>
         <input type="checkbox" id="toggle-creation" checked onchange="toggleDataset(0)">
         <label for="toggle-creation">Ticket Creation</label>
@@ -30,154 +19,158 @@
         <label for="toggle-closed">Closed Tickets</label>
     </div>
     
-    <button onclick="generatePDFType('chart')" class="bg-success-600 text-white hover:bg-primary-800 px-4 py-1 rounded-lg shadow
-    hover:shadow-lg text-base">Download Chart as PDF</button>
-    <button onclick="generatePDF()" class="bg-success-600 text-white hover:bg-primary-800 px-4 py-1 rounded-lg shadow
-    hover:shadow-lg text-base">Download Chart and Table as PDF</button>
-    <canvas id="trendChart" width="400" height="150"></canvas>
+    {{-- Chart and Table Container --}}
+    <div class="w-full flex flex-row gap-5">
+        {{-- Chart --}}
+        <div class="overflow-x-auto relative sm:rounded-lg w-full" style="width: 1000px; max-width: 100%;">
+           <canvas id="trendChart" ></canvas>
+        </div>
+        
+        {{-- Table for chart --}}
+        <div style="flex: 1; position:relative; margin-top: -100px;">
+            <div>
+                <label id="total-created" data-my-variable="{{ $totalCreated }}" class="font-bold">Total Ticket Created: {{$totalCreated}}</label>&emsp;
+                <label id="total-closed" data-my-variable="{{ $totalClosed }}" class="font-bold">Total Ticket Closed: {{$totalClosed}}</label>&emsp;
+                <label id="total-pending" data-my-variable="{{ $totalPending }}" class="font-bold">Total Ticket Pending: {{$totalPending}}</label>&emsp;
+            </div>
+            {{-- Buttons for generating PDF --}}
+            <div class="mb-4">
+                <button onclick="generatePDFType('chart')" class="bg-success-600 text-white hover:bg-primary-800 px-4 py-1 rounded-lg shadow hover:shadow-lg text-base">Download Chart as PDF</button>
+                <button onclick="generatePDF()" class="bg-success-600 text-white hover:bg-primary-800 px-4 py-1 rounded-lg shadow hover:shadow-lg text-base">Download Chart and Table as PDF</button>
+                <button onclick="generatePDFType('table')" class="bg-success-600 text-white hover:bg-primary-800 px-4 py-1 rounded-lg shadow hover:shadow-lg text-base">Download Table as PDF</button>
+            </div>
 
-    <button onclick="generatePDFType('table')" class="bg-success-600 text-white hover:bg-primary-800 px-4 py-1 rounded-lg shadow
-    hover:shadow-lg text-base">Download Table as PDF</button>
-    <table id="ticketTable" class="w-full text-sm text-left text-gray-500 dark:text-gray-400" style="width: 100%; border-collapse: collapse; text-align: center;">
-        <thead class="text-xs text-gray-700 uppercase
-        bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-            <th style="border: 1px solid black; padding: 5px; text-align: center;" scope="col" class="py-3 px-6">Date</th>
-            <th style="border: 1px solid black; padding: 5px; text-align: center;" scope="col" class="py-3 px-6">Ticket Creation</th>
-            <th style="border: 1px solid black; padding: 5px; text-align: center;" scope="col" class="py-3 px-6">Pending Tickets</th>
-            <th style="border: 1px solid black; padding: 5px; text-align: center;" scope="col" class="py-3 px-6">Closed Tickets</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($labels as $index => $label)
-                <tr>
-                    <td style="border: 1px solid black; padding: 5px; height: 20px; vertical-align: middle; text-align: center;">{{ $label }}</td>
-                    <td style="border: 1px solid black; padding: 5px; height: 20px; vertical-align: middle; text-align: center;">{{ $ticketCreationData[$index] }}</td>
-                    <td style="border: 1px solid black; padding: 5px; height: 20px; vertical-align: middle; text-align: center;">{{ $pendingTicketData[$index] }}</td>
-                    <td style="border: 1px solid black; padding: 5px; height: 20px; vertical-align: middle; text-align: center;">{{ $closedTicketData[$index] }}</td>
-                </tr>
-            @endforeach
-                <tr>
-                    <td style="color: white">a</td>
-                    <td style="color: white">a</td>
-                    <td style="color: white">a</td>
-                    <td style="color: white">a</td>
-                </tr>
-        </tbody>
-    </table>
+            <table id="ticketTable" class="w-full text-sm text-left text-gray-500 dark:text-gray-400" style="width: 100%; border-collapse: collapse; text-align: center;">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                    <th style="border: 1px solid black; padding: 5px; text-align: center;" scope="col" class="py-3 px-6">Date</th>
+                    <th style="border: 1px solid black; padding: 5px; text-align: center;" scope="col" class="py-3 px-6">Ticket Creation</th>
+                    <th style="border: 1px solid black; padding: 5px; text-align: center;" scope="col" class="py-3 px-6">Pending Tickets</th>
+                    <th style="border: 1px solid black; padding: 5px; text-align: center;" scope="col" class="py-3 px-6">Closed Tickets</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($labels as $index => $label)
+                        <tr>
+                            <td style="border: 1px solid black; padding: 5px; height: 20px; vertical-align: middle; text-align: center;">{{ $label }}</td>
+                            <td style="border: 1px solid black; padding: 5px; height: 20px; vertical-align: middle; text-align: center;">{{ $ticketCreationData[$index] }}</td>
+                            <td style="border: 1px solid black; padding: 5px; height: 20px; vertical-align: middle; text-align: center;">{{ $pendingTicketData[$index] }}</td>
+                            <td style="border: 1px solid black; padding: 5px; height: 20px; vertical-align: middle; text-align: center;">{{ $closedTicketData[$index] }}</td>
+                        </tr>
+                    @endforeach
+                        <tr>
+                            <td style="color: white">a</td>
+                            <td style="color: white">a</td>
+                            <td style="color: white">a</td>
+                            <td style="color: white">a</td>
+                        </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 
     <script>
-        document.addEventListener('livewire:load', function () {
-            let trendChart = null;
+    document.addEventListener('livewire:load', function () {
+        let trendChart = null;
 
-            function renderChartTrend(labels, ticketCreationData, pendingTicketData, closedTicketData) {
-                const ctxTrend = document.getElementById('trendChart').getContext('2d');
-                if (trendChart) {
-                    trendChart.destroy();
-                }
-                
-                trendChart = new Chart(ctxTrend, {
-                    type: 'line',
-                    data: {
-                        labels: labels,
-                        datasets: [
-                            {
-                                label: 'Ticket Creation',
-                                data: ticketCreationData,
-                                borderColor: 'rgba(75, 192, 192, 1)',
-                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                                fill: false
-                            },
-                            {
-                                type: 'bar',
-                                label: 'Pending Tickets',
-                                data: pendingTicketData,
-                                borderColor: 'rgba(255, 159, 64, 1)',
-                                backgroundColor: 'rgba(255, 159, 64, 0.2)',
-                                fill: true
-                            },
-                            {
-                                label: 'Closed Tickets',
-                                data: closedTicketData,
-                                borderColor: 'rgba(153, 102, 255, 1)',
-                                backgroundColor: 'rgba(153, 102, 255, 0.2)',
-                                fill: false
-                            }
-                        ]
-                    },
-                    options: {
-                        responsive: true,
-                        title: {
-                            display: true,
-                            text: 'Ticket Trends Over Time'
+        function renderChartTrend(labels, ticketCreationData, pendingTicketData, closedTicketData) {
+            const ctxTrend = document.getElementById('trendChart').getContext('2d');
+            if (trendChart) {
+                trendChart.destroy();
+            }
+            
+            trendChart = new Chart(ctxTrend, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Ticket Creation',
+                            data: ticketCreationData,
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            fill: false
                         },
-                        scales: {
-                            x: {
-                                type: 'time',
-                                time: {
-                                    unit: 'day'
-                                },
-                                display: true,
-                                title: {
-                                    display: true,
-                                    text: 'Date'
-                                }
+                        {
+                            type: 'bar',
+                            label: 'Pending Tickets',
+                            data: pendingTicketData,
+                            borderColor: 'rgba(255, 159, 64, 1)',
+                            backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                            fill: true
+                        },
+                        {
+                            label: 'Closed Tickets',
+                            data: closedTicketData,
+                            borderColor: 'rgba(153, 102, 255, 1)',
+                            backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                            fill: false
+                        }
+                    ]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    responsive: true,
+                    title: {
+                        display: true,
+                        text: 'Ticket Trends Over Time'
+                    },
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'day'
                             },
-                            y: {
-                                beginAtZero: true,
-                                max:5,
+                            display: true,
+                            title: {
                                 display: true,
-                                title: {
-                                    display: true,
-                                    text: 'Number of Tickets'
-                                },
-                                ticks: {
-                                    stepSize: 1,
-                                    callback: function(value) {
-                                        if (Number.isInteger(value)) {
-                                            return value;
-                                        }
-                                    }   
-                                }
+                                text: 'Date'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            display: true,
+                            title: {
+                                display: true,
+                                text: 'Number of Tickets'
+                            },
+                            ticks: {
+                                precision: 0
                             }
                         }
                     }
-                });
-            }       
-            
-            function toggleDataset(index) {
-                const chart = trendChart;
-                const meta = chart.getDatasetMeta(index);
-                meta.hidden = meta.hidden === null ? !chart.data.datasets[index].hidden : null;
-                chart.update();
-            }
-
-            // Initial rendering
-            renderChartTrend(@json($labels), @json($ticketCreationData), @json($pendingTicketData), @json($closedTicketData));
-
-            // Re-rendering when Livewire updates
-            Livewire.hook('message.processed', (message, component) => {
-                
-                if (component.fingerprint.name === 'analytics.ticket-trend') {
+                }
+            });
+        }       
+        
+        function toggleDataset(index) {
+            const chart = trendChart;
+            const meta = chart.getDatasetMeta(index);
+            meta.hidden = meta.hidden === null ? !chart.data.datasets[index].hidden : null;
+            chart.update();
+        }
+        // Initial rendering
+        renderChartTrend(@json($labels), @json($ticketCreationData), @json($pendingTicketData), @json($closedTicketData));
+        // Re-rendering when Livewire updates
+        Livewire.hook('message.processed', (message, component) => {
+            if (component.fingerprint.name === 'analytics.ticket-trend') {
                 const labels = component.get('labels') || [];
                 const ticketCreationData = component.get('ticketCreationData') || [];
                 const pendingTicketData = component.get('pendingTicketData') || [];
                 const closedTicketData = component.get('closedTicketData') || [];
-                
-
-                trendChart.data.labels = labels;
-                trendChart.data.datasets[0].data = ticketCreationData;
-                trendChart.data.datasets[1].data = pendingTicketData;
-                trendChart.data.datasets[2].data = closedTicketData;
-                trendChart.update();
-                }
-            });
-
-            // Make toggleDataset globally accessible
-            window.toggleDataset = toggleDataset;
-            
+                renderChartTrend(labels, ticketCreationData, pendingTicketData, closedTicketData);
+                // trendChart.data.labels = labels;
+                // trendChart.data.datasets[0].data = ticketCreationData;
+                // trendChart.data.datasets[1].data = pendingTicketData;
+                // trendChart.data.datasets[2].data = closedTicketData;
+                // trendChart.update();
+            }
         });
+        // Make toggleDataset globally accessible
+        window.toggleDataset = toggleDataset;
+        
+    });
 
         function generatePDFType(type) {
             const { jsPDF } = window.jspdf;

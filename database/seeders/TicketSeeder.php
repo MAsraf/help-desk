@@ -50,14 +50,14 @@ class TicketSeeder extends Seeder
 
         // Define the start and end dates
         $startDate = new DateTime('2024-01-01');
-        $endDate = new DateTime('2024-6-31');
+        $endDate = new DateTime('2024-7-31');
 
         // Get the timestamps for the start and end dates
         $startTimestamp = $startDate->getTimestamp();
         $endTimestamp = $endDate->getTimestamp();
 
         // Seed the tickets
-        for ($i = 0; $i < 50; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             // Generate a random timestamp between the start and end dates
             $randomTimestamp = mt_rand($startTimestamp, $endTimestamp);
 
