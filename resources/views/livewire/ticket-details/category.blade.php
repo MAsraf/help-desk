@@ -13,7 +13,7 @@
                     </div>
                     <div wire:loading>
                         <em class="fa fa-spin fa-spinner"></em>
-                    </div>cd
+                    </div>
                 </button>
             </div>
         </form>
