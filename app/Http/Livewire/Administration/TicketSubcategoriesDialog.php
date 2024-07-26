@@ -87,7 +87,8 @@ class TicketSubcategoriesDialog extends Component implements HasForms
                     'parent_id' => $data['parent_id'],
                     'text_color' => TicketCategory::where('id',$parent)->pluck('text_color')->first(),
                     'bg_color' => TicketCategory::where('id',$parent)->pluck('bg_color')->first(),
-                    'slug' => Str::slug($data['title'], '_')
+                    'slug' => Str::slug($data['title'], '_'),
+                    'level' => 'subcategory'
                 ]);
             Notification::make()
                 ->success()
@@ -118,7 +119,8 @@ class TicketSubcategoriesDialog extends Component implements HasForms
     {
         $this->subcategory->delete();
         $this->deleteConfirmationOpened = false;
-        $this->emit('categoryDeleted');
+        $this->dispatchBrowserEvent('toggleSubcategoryModal');
+        redirect()->to('/administration/ticket-subcategories');
         Notification::make()
             ->success()
             ->title(__('Subcategory deleted'))

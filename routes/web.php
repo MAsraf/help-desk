@@ -72,6 +72,7 @@ Route::middleware(['auth', 'set_locale'])
         
         Route::view('/administration/ticket-categories', 'administration.ticket-categories')->name('administration.ticket-categories');
         Route::view('/administration/ticket-subcategories', 'administration.ticket-subcategories')->name('administration.ticket-subcategories');
+        Route::view('/administration/ticket-issues', 'administration.ticket-issues')->name('administration.ticket-issues');
 
         // Notifications
         Route::view('/notifications', 'notifications')->name('notifications');

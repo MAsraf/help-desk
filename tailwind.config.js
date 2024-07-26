@@ -30,7 +30,7 @@ module.exports = {
                 },
             },
             animation: {
-                'banner-slide-left' : 'slide_left 20s linear infinite'
+                'banner-slide-left' : 'slide_left 20s linear infinite',
             }
         },
     },
